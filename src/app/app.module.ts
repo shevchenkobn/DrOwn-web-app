@@ -41,14 +41,50 @@ import {
   MatTooltipModule,
   MatTreeModule,
 } from '@angular/material';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import {
+  L10nConfig,
+  L10nLoader,
+  TranslationModule,
+  StorageStrategy,
+  ProviderType,
+  LogLevel,
+} from 'angular-l10n';
+
+const l10nConfig: L10nConfig = {
+  logger: {
+    level: LogLevel.Warn
+  },
+  locale: {
+    languages: [
+      { code: 'en', dir: 'ltr' },
+      { code: 'uk', dir: 'ltr' }
+    ],
+    language: 'en',
+    defaultLocale: { languageCode: 'en', countryCode: 'US' },
+    storage: StorageStrategy.Local
+  },
+  translation: {
+    providers: [
+      { type: ProviderType.Static, prefix: './assets/l10n/' }
+    ],
+    caching: true,
+    composedKeySeparator: '.',
+    missingValue: 'No key'
+  }
+};
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
+
+    TranslationModule.forRoot(l10nConfig),
+
     BrowserAnimationsModule,
 
     MatAutocompleteModule,
@@ -88,6 +124,13 @@ import {
     MatTreeModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule  {}
+export class AppModule {
+  public l10nLoader: L10nLoader;
+
+  constructor(l10nLoader: L10nLoader) {
+    this.l10nLoader = l10nLoader;
+    this.l10nLoader.load();
+  }
+}
