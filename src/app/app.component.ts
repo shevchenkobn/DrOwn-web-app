@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
-import { LocaleService, TranslationService, Language } from 'angular-l10n';
+import { TranslateService } from '@ngx-translate/core';
+import { from } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -8,35 +9,42 @@ import { LocaleService, TranslationService, Language } from 'angular-l10n';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit, OnDestroy {
-  @Language() lang: string;
   public mobileQuery: MediaQueryList;
-  public locale: LocaleService;
-  public translation: TranslationService;
+  public translate: TranslateService;
 
   private _mobileQueryListener: () => void;
 
   constructor(
     changeDetectorRef: ChangeDetectorRef,
     media: MediaMatcher,
-    locale: LocaleService,
-    translation: TranslationService,
+    translate: TranslateService,
+    // locale: LocaleService,
+    // translation: TranslationService,
   ) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
 
-    this.locale = locale;
-    this.translation = translation;
+    this.translate = translate;
   }
 
-  selectLocale(lang: string, locale: string) {
-    this.lang = lang;
-    this.locale.setCurrentLanguage(lang);
+  selectLocale(lang: string) {
+    // this.lang = lang;
+    // this.locale.setCurrentLanguage(lang);
+    this.translate.setDefaultLang(lang);
+    localStorage.setItem('locale', lang);
     // this.locale.setDefaultLocale(locale);
   }
 
   ngOnInit() {
-    // this.translation.translationChanged().sub
+    // const locale = localStorage.getItem('locale');
+    // // this.translation.translationChanged().sub
+    // this.translate.setDefaultLang('en-US');
+    // if (!locale) {
+    //   localStorage.setItem('locale', 'en-US');
+    // } else {
+    //   this.translate.setDefaultLang(locale);
+    // }
   }
 
   ngOnDestroy() {

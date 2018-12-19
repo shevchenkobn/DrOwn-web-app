@@ -42,37 +42,12 @@ import {
   MatTreeModule,
 } from '@angular/material';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import {
-  L10nConfig,
-  L10nLoader,
-  TranslationModule,
-  StorageStrategy,
-  ProviderType,
-  LogLevel,
-} from 'angular-l10n';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
-const l10nConfig: L10nConfig = {
-  logger: {
-    level: LogLevel.Warn
-  },
-  locale: {
-    languages: [
-      { code: 'en', dir: 'ltr' },
-      { code: 'uk', dir: 'ltr' }
-    ],
-    language: 'en',
-    defaultLocale: { languageCode: 'en', countryCode: 'US' },
-    storage: StorageStrategy.Local
-  },
-  translation: {
-    providers: [
-      { type: ProviderType.Static, prefix: './assets/l10n/' }
-    ],
-    caching: true,
-    composedKeySeparator: '.',
-    missingValue: 'No key'
-  }
-};
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/l10n/', '.json');
+}
 
 @NgModule({
   declarations: [
@@ -80,10 +55,16 @@ const l10nConfig: L10nConfig = {
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     HttpClientModule,
 
-    TranslationModule.forRoot(l10nConfig),
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    }),
+    AppRoutingModule,
 
     BrowserAnimationsModule,
 
@@ -126,11 +107,4 @@ const l10nConfig: L10nConfig = {
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {
-  public l10nLoader: L10nLoader;
-
-  constructor(l10nLoader: L10nLoader) {
-    this.l10nLoader = l10nLoader;
-    this.l10nLoader.load();
-  }
-}
+export class AppModule { }

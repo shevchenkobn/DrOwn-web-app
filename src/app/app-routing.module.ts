@@ -1,10 +1,32 @@
 import { NgModule } from '@angular/core';
+
+import { Location } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
+import { LocalizeParser, LocalizeRouterModule, LocalizeRouterSettings } from 'localize-router';
+import { LocalizeRouterHttpLoader } from 'localize-router-http-loader';
+import { TranslateService } from '@ngx-translate/core';
+import { HttpClient } from '@angular/common/http';
 
 const routes: Routes = [];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  imports: [
+    LocalizeRouterModule.forRoot(routes, {
+      parser: {
+        provide: LocalizeParser,
+        useFactory: (
+          translate: TranslateService,
+          location: Location,
+          settings: LocalizeRouterSettings,
+          http: HttpClient,
+        ) =>
+          new LocalizeRouterHttpLoader(translate, location, settings, http),
+        deps: [TranslateService, Location, LocalizeRouterSettings, HttpClient],
+      },
+    }),
+    RouterModule.forRoot(routes),
+  ],
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

@@ -8,13 +8,14 @@
                class="mat-elevation-z2"
                fixedTopGap="56">
     <mat-nav-list>
-      <button (click)="selectLocale('uk', 'UA')">Ukrainian</button>
-      <button (click)="selectLocale('en', 'US')">English</button>
-      <p>Shut the fuck up</p>
+      <button (click)="selectLocale('uk-UA')">Ukrainian</button>
+      <button (click)="selectLocale('en-US')">English</button>
+      <p translate>test</p>
     </mat-nav-list>
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <p>{{'test' | translate:lang}}</p>
+    <p translate>test</p>
+    <p translate>test555</p>
   </mat-sidenav-content>
 </mat-sidenav-container>
