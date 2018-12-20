@@ -27,7 +27,7 @@ import {
   MatProgressBarModule,
   MatProgressSpinnerModule,
   MatRadioModule,
-  MatRippleModule,
+  MatRippleModule, MatSelectionList,
   MatSelectModule,
   MatSidenavModule,
   MatSliderModule,
@@ -44,6 +44,8 @@ import {
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { SidenavComponent } from './sidenav/sidenav.component';
+import { L10nService } from './services/l10n.service';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/l10n/', '.json');
@@ -52,6 +54,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 @NgModule({
   declarations: [
     AppComponent,
+    SidenavComponent,
   ],
   imports: [
     BrowserModule,
@@ -92,6 +95,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatRadioModule,
     MatRippleModule,
     MatSelectModule,
+    // MatSelectionList,
     MatSidenavModule,
     MatSliderModule,
     MatSlideToggleModule,

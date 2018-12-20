@@ -1,5 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
+
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "~@angular/material/theming";
+
+//$accent: mat-palette($mat-green, A200, A100, A400);
+$accent: mat-palette($mat-pink);
 
 html {
   height: 100%;
@@ -20,20 +25,17 @@ app-root {
   right: 0;
 }
 
-//.root {
-//  display: block;
-//  margin: 0;
-//  min-height: 100% !important;
-//}
+.mat-icon-label {
+  display: inline-block;
+  height: 24px;
+  line-height: 24px;
+  vertical-align: middle;
+}
 
-//.basic-container {
-//  padding: 30px;
-//}
-//:host {
-//  position: absolute;
-//  left: 0;
-//  right: 0;
-//  bottom: 0;
-//  top: 0;
-//}
+.mat-icon-label.right {
+  padding-left: 1em;
+}
 
+//.mat-background-accent {
+//  background-color: mat-color($accent, 300);
+//}

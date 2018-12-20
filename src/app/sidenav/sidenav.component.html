@@ -1,0 +1,18 @@
+<script src="sidenav.component.ts"></script>
+<mat-expansion-panel>
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      <mat-icon>translate</mat-icon>
+      <span class="mat-icon-label right">{{ 'languages' | translate }}</span>
+    </mat-panel-title>
+    <mat-panel-description>
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+  <mat-list>
+    <mat-list-item *ngFor="let locale of locales">
+      <mat-radio-button (click)="selectLocale(locale[0])" [checked]="activeLocale === locale[0]">
+        {{locale[1]}}
+      </mat-radio-button>
+    </mat-list-item>
+  </mat-list>
+</mat-expansion-panel>

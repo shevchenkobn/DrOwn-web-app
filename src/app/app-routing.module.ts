@@ -7,7 +7,9 @@ import { LocalizeRouterHttpLoader } from 'localize-router-http-loader';
 import { TranslateService } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 
-const routes: Routes = [];
+export const routes: Routes = [
+
+];
 
 @NgModule({
   imports: [
