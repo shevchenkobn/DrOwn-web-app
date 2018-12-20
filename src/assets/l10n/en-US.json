@@ -1,4 +1,6 @@
 {
   "test": "Hello World",
-  "languages": "Language"
+  "languages": "Language",
+  "navigation": "Navigation",
+  "profile": "Profile"
 }

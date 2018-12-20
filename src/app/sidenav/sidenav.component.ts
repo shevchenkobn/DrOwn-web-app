@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { L10nService } from '../services/l10n.service';
 import { MatSelectionList } from '@angular/material';
+import { routes } from '../app-routing.module';
 
 const localeNames = {
   'uk-UA': 'Українська',
@@ -19,6 +20,7 @@ export class SidenavComponent implements OnInit {
     'uk-UA': 'Українська',
     'en-US': 'English (US)',
   });
+  public routes = routes;
 
   constructor(l10nService: L10nService) {
     this.l10n = l10nService;
@@ -31,7 +33,6 @@ export class SidenavComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this);
   }
 
 }

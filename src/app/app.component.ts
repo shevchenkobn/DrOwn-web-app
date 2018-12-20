@@ -1,7 +1,14 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { TranslateService } from '@ngx-translate/core';
 import { from } from 'rxjs';
+import { MatSidenav } from '@angular/material';
 
 @Component({
   selector: 'app-root',
@@ -9,10 +16,11 @@ import { from } from 'rxjs';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit, OnDestroy {
+  @ViewChild('snav') snav!: MatSidenav;
   public mobileQuery: MediaQueryList;
   public translate: TranslateService;
 
-  private _mobileQueryListener: () => void;
+  private _mobileQueryListener: (e: { matches: boolean }) => void;
 
   constructor(
     changeDetectorRef: ChangeDetectorRef,
@@ -22,32 +30,23 @@ export class AppComponent implements OnInit, OnDestroy {
     // translation: TranslationService,
   ) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
-    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
-    this.mobileQuery.addListener(this._mobileQueryListener);
+    this._mobileQueryListener = (e) => {
+      changeDetectorRef.detectChanges();
+      if (e.matches) {
+        this.snav.close();
+      } else {
+        this.snav.open();
+      }
+    };
+    this.mobileQuery.addEventListener('change', this._mobileQueryListener);
 
     this.translate = translate;
   }
 
-  selectLocale(lang: string) {
-    // this.lang = lang;
-    // this.locale.setCurrentLanguage(lang);
-    this.translate.setDefaultLang(lang);
-    localStorage.setItem('locale', lang);
-    // this.locale.setDefaultLocale(locale);
-  }
-
   ngOnInit() {
-    // const locale = localStorage.getItem('locale');
-    // // this.translation.translationChanged().sub
-    // this.translate.setDefaultLang('en-US');
-    // if (!locale) {
-    //   localStorage.setItem('locale', 'en-US');
-    // } else {
-    //   this.translate.setDefaultLang(locale);
-    // }
   }
 
   ngOnDestroy() {
-
+    this.mobileQuery.removeEventListener('change', this._mobileQueryListener);
   }
 }

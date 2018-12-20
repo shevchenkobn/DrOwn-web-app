@@ -1,4 +1,12 @@
 <script src="sidenav.component.ts"></script>
+<mat-nav-list>
+  <h3 matSubheader>{{ 'navigation' | translate }}</h3>
+  <mat-list-item>
+    <mat-icon>account_circle</mat-icon>
+    <span class="mat-icon-label right">{{ 'profile' | translate }}</span>
+  </mat-list-item>
+</mat-nav-list>
+<mat-divider></mat-divider>
 <mat-expansion-panel>
   <mat-expansion-panel-header>
     <mat-panel-title>
@@ -16,3 +24,18 @@
     </mat-list-item>
   </mat-list>
 </mat-expansion-panel>
+<!--<mat-expansion-panel>-->
+<!--<mat-expansion-panel-header>-->
+<!--<mat-panel-title>-->
+<!--<mat-icon>list_alt</mat-icon>-->
+<!--<span class="mat-icon-label right">{{ 'navigation' | translate }}</span>-->
+<!--</mat-panel-title>-->
+<!--<mat-panel-description>-->
+<!--</mat-panel-description>-->
+<!--</mat-expansion-panel-header>-->
+<!--<mat-list>-->
+<!--<mat-list-item *ngFor="let route of routes">-->
+
+<!--</mat-list-item>-->
+<!--</mat-list>-->
+<!--</mat-expansion-panel>-->
