@@ -6,9 +6,10 @@ import { LocalizeParser, LocalizeRouterModule, LocalizeRouterSettings } from 'lo
 import { LocalizeRouterHttpLoader } from 'localize-router-http-loader';
 import { TranslateService } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 export const routes: Routes = [
-
+  { path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({

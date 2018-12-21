@@ -38,12 +38,15 @@ export class AppComponent implements OnInit, OnDestroy {
         this.snav.open();
       }
     };
-    this.mobileQuery.addEventListener('change', this._mobileQueryListener);
 
     this.translate = translate;
   }
 
   ngOnInit() {
+    this.mobileQuery.addEventListener('change', this._mobileQueryListener);
+    if (!this.mobileQuery.matches) {
+      this.snav.open();
+    }
   }
 
   ngOnDestroy() {
