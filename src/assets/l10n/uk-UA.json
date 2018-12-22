@@ -2,5 +2,9 @@
   "test": "ЇЇЇЇЇЇ, Світ",
   "languages": "Мова",
   "navigation": "Навігація",
-  "profile": "Профіль"
+  "profile": "Профіль",
+  "not-found-page": {
+    "title": "Сторінка не знайдена",
+    "description": "Сторінка за шляхом {{path}} не знайдена"
+  }
 }

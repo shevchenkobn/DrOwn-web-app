@@ -1,21 +1,34 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, UrlSegment } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-page-not-found',
   templateUrl: './page-not-found.component.html',
   styleUrls: ['./page-not-found.component.scss']
 })
-export class PageNotFoundComponent implements OnInit {
-  public path: string | null = null;
+export class PageNotFoundComponent implements OnInit, OnDestroy {
+  private _route: ActivatedRoute;
+  private _route$?: Subscription;
+  public pathWrap: {
+    path: string
+  } = {
+    path: ''
+  };
 
   constructor(route: ActivatedRoute) {
-    route.url.subscribe(value => {
-      this.path = value.join('/');
+    this._route = route;
+  }
+
+  public ngOnInit() {
+    this._route$ = this._route.url.subscribe(value => {
+      this.pathWrap.path = '<strong>' + value.join('/') + '</strong>/';
     });
   }
 
-  ngOnInit() {
+  public ngOnDestroy(): void {
+    if (this._route$) {
+      this._route$.unsubscribe();
+    }
   }
-
 }

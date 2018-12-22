@@ -45,7 +45,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { SidenavComponent } from './sidenav/sidenav.component';
-import { L10nService } from './services/l10n.service';
+import { L10nService } from './_services/l10n.service';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 export function HttpLoaderFactory(http: HttpClient) {

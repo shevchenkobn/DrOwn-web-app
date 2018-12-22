@@ -2,6 +2,10 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.1.3.
 
+**NOTE:** This project doesn't include feature and shared modules. The only module is `AppModule`.
+
+It is intentional to experience "partially bad" design and understand its importance.
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
