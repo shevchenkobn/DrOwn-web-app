@@ -47,6 +47,10 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { L10nService } from './_services/l10n.service';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { JwtModule } from '@auth0/angular-jwt';
+import { AuthService } from './_auth/auth.service';
+import { environment } from '../environments/environment';
+import { httpInterceptorProviders } from './_interceptors';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/l10n/', '.json');
@@ -69,6 +73,15 @@ export function HttpLoaderFactory(http: HttpClient) {
         deps: [HttpClient]
       }
     }),
+    // JwtModule.forRoot({
+    //   config: {
+    //     tokenGetter: AuthService.getAccessToken,
+    //     whitelistedDomains: [environment.host],
+    //     blacklistedRoutes: AuthService.NO_AUTH_PATHS,
+    //     throwNoTokenError: true,
+    //     skipWhenExpired: true
+    //   }
+    // }),
     AppRoutingModule,
 
     BrowserAnimationsModule,
@@ -110,7 +123,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatTooltipModule,
     MatTreeModule,
   ],
-  providers: [],
+  providers: [
+    httpInterceptorProviders,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule { }
