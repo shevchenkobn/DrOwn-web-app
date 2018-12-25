@@ -44,7 +44,7 @@
       }
     ],
     "no-arg": true,
-    "no-bitwise": true,
+//    "no-bitwise": true,
     "no-console": [
       true,
       "debug",
@@ -126,6 +126,8 @@
     "use-life-cycle-interface": true,
     "use-pipe-transform-interface": true,
     "component-class-suffix": true,
-    "directive-class-suffix": true
+    "directive-class-suffix": true,
+
+    "no-bitwise": false
   }
 }

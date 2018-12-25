@@ -7,7 +7,7 @@ import {
   HttpRequest,
 } from '@angular/common/http';
 import { AuthService } from './auth.service';
-import { Observable, range, throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
 import { ServerErrorCode } from '../_services/error-codes';
 
@@ -41,7 +41,7 @@ export class AuthInterceptor implements HttpInterceptor {
             )
           )
         ) {
-          return this._auth.updateToken().pipe(
+          return this._auth.refreshToken().pipe(
             switchMap(() => next.handle(this.addAuthHeader(request))),
           );
         }

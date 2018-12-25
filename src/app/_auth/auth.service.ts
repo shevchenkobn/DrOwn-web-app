@@ -4,6 +4,8 @@ import { HttpUrlHelper } from '../_http/http-url.helper';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { map, shareReplay, tap } from 'rxjs/operators';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { IUser, UserRoles } from '../../_model/user.model';
+import { UrlSegment } from '@angular/router';
 
 interface Tokens {
   accessToken: string;
@@ -22,6 +24,7 @@ export class AuthService {
   public static readonly AUTH_LOGIN_PATH = AuthService.AUTH_BASE_PATH;
   public static readonly AUTH_REFRESH_PATH = AuthService.AUTH_BASE_PATH + '/refresh';
   public static readonly AUTH_REGISTER_PATH = AuthService.AUTH_BASE_PATH + '/register';
+  public static readonly PROFILE_PATH = '/profile';
   public static readonly DRONES_PATH = '/drones';
   public static readonly DRONE_PRICES_PATH = '/drone-prices';
   // FIXME: check if droons should be added
@@ -38,11 +41,15 @@ export class AuthService {
     [HttpUrlHelper.getUrl(AuthService.AUTH_BASE_PATH)],
   ];
 
+  public static readonly LOGIN_ROUTE = '/login';
+
   protected readonly _http: HttpClient;
   protected _email = '';
   protected _login$?: Observable<string>;
   protected _tokenUpdate$?: Observable<string>;
+  protected _user?: IUser;
   public readonly jwt: JwtHelperService;
+  public redirectUrl?: UrlSegment[];
 
   public static getAccessToken() {
     return localStorage.getItem(this.LOCAL_STORAGE_ACCESS_TOKEN);
@@ -55,7 +62,7 @@ export class AuthService {
     });
   }
 
-  public updateToken() {
+  public refreshToken() {
     if (this._tokenUpdate$) {
       return this._tokenUpdate$;
     }
@@ -118,5 +125,29 @@ export class AuthService {
     localStorage.removeItem(AuthService.LOCAL_STORAGE_ACCESS_TOKEN);
   }
 
-  // TODO: add update user
+  public hasUser() {
+    return localStorage.getItem(AuthService.LOCAL_STORAGE_USER) !== null;
+  }
+
+  public getUser() {
+    if (this._user) {
+      return this._user;
+    }
+    const userJson = localStorage.getItem(AuthService.LOCAL_STORAGE_USER);
+    if (!userJson) {
+      throw new Error('User is not found');
+    }
+    this._user = JSON.parse(userJson) as IUser;
+    return this._user;
+  }
+
+  public refreshUser() {
+    return this._http.get<IUser>(AuthService.PROFILE_PATH).pipe(
+      tap(user => {
+        localStorage.setItem(AuthService.LOCAL_STORAGE_USER, JSON.stringify(user));
+        this._user = user;
+      }),
+      shareReplay()
+    );
+  }
 }
