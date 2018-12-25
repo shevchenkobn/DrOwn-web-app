@@ -19,7 +19,7 @@ export abstract class HttpUrlHelper {
 
   static getUrl(url: string) {
     if (!url.startsWith('/')) {
-      throw new TypeError('Path must start with a slash');
+      return this._baseUrl + '/' + url;
     }
     return this._baseUrl + url;
   }

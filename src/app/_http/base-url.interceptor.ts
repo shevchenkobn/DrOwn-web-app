@@ -17,9 +17,12 @@ export class BaseUrlInterceptor implements HttpInterceptor {
   }
 
   public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const clone = req.clone({
+    const i = req.url.indexOf('assets');
+    if (i === 0 || req.url[0] === '/' && i === 1 || req.url.startsWith('./') && i === 2) {
+      return next.handle(req);
+    }
+    return next.handle(req.clone({
       url: HttpUrlHelper.getUrl(req.url),
-    });
-    return next.handle(clone);
+    }));
   }
 }

@@ -12,31 +12,41 @@ import { HomeGuard } from './_guards/home.guard';
 import { AuthGuard } from './_auth/auth.guard';
 import { LoginGuard } from './_guards/login.guard';
 import { UsersComponent } from './users/users.component';
+import { LoginComponent } from './login/login.component';
 
 export const dashboardPaths = {
-  users: '/users',
-  homeDrones: '/home/drones', // NOTE: if changed, routes below also must be changed
-  drones: '/drones',
+  users: 'users',
+  homeDrones: 'home/drones', // NOTE: if changed, routes below also must be changed
+  drones: 'drones',
 };
 
 export const routes: Routes = [
-  { path: '/login', canActivate: [LoginGuard], pathMatch: 'full' },
+  { path: 'login', canActivate: [LoginGuard], component: LoginComponent, pathMatch: 'full' },
   { path: dashboardPaths.users, canActivate: [AuthGuard], component: UsersComponent },
   {
-    path: '/home',
+    path: 'home',
     canActivate: [AuthGuard],
     children: [
-      { path: 'drones' }
+      // { path: 'drones' }
     ]
   },
-  { path: dashboardPaths.drones, canActivate: [AuthGuard] },
-  { path: '/home', canActivate: [AuthGuard, HomeGuard], pathMatch: 'full' },
-  { path: '/', canActivate: [AuthGuard, HomeGuard], pathMatch: 'full' },
+
+  // { path: dashboardPaths.drones, canActivate: [AuthGuard] },
+  // { path: '/home', canActivate: [AuthGuard], pathMatch: 'full', redirectTo: '/home/profile' },
+  {
+    path: '',
+    canActivate: [AuthGuard, HomeGuard],
+    pathMatch: 'full',
+    component: PageNotFoundComponent
+  },
   { path: '**', component: PageNotFoundComponent },
 ];
 
 @NgModule({
   imports: [
+    RouterModule.forRoot(routes, {
+      // enableTracing: !environment.production,
+    }),
     LocalizeRouterModule.forRoot(routes, {
       parser: {
         provide: LocalizeParser,
@@ -49,9 +59,6 @@ export const routes: Routes = [
           new LocalizeRouterHttpLoader(translate, location, settings, http),
         deps: [TranslateService, Location, LocalizeRouterSettings, HttpClient],
       },
-    }),
-    RouterModule.forRoot(routes, {
-      enableTracing: !environment.production,
     }),
   ],
   exports: [RouterModule],

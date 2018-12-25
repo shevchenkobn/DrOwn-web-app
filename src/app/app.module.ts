@@ -52,6 +52,7 @@ import { UsersComponent } from './users/users.component';
 import { LoginComponent } from './login/login.component';
 import { ProgressSpinnerComponent } from './progress-spinner/progress-spinner.component';
 import { AppOverlayModule } from './_modules/overlay/overlay.module';
+import { FormsModule } from '@angular/forms';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/l10n/', '.json');
@@ -69,6 +70,9 @@ export function HttpLoaderFactory(http: HttpClient) {
   imports: [
     BrowserModule,
     HttpClientModule,
+    FormsModule,
+
+    AppOverlayModule,
 
     TranslateModule.forRoot({
       loader: {
@@ -126,8 +130,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatToolbarModule,
     MatTooltipModule,
     MatTreeModule,
-
-    AppOverlayModule,
   ],
   providers: [
     httpInterceptorProviders,

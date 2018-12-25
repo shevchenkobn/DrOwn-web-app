@@ -15,7 +15,7 @@ import { OverlayService, AppOverlayConfig } from '../_modules/overlay/overlay.mo
 @Component({
   selector: 'app-progress-spinner',
   templateUrl: './progress-spinner.component.html',
-  styleUrls: ['./progress-spinner.component.css'],
+  styleUrls: ['./progress-spinner.component.scss'],
 })
 export class ProgressSpinnerComponent implements OnInit, DoCheck {
   @Input() color?: ThemePalette;

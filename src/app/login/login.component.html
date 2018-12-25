@@ -1,4 +1,4 @@
-<ng-form (ngSubmit)="submit()">
+<form (ngSubmit)="submit()">
   <app-progress-spinner class="example-margin"
                         color="primary"
                         mode="indeterminate"
@@ -10,17 +10,29 @@
     <mat-card-title translate>login-page.title</mat-card-title>
     <mat-card-subtitle [innerHTML]="'login-page.redirect' | translate:redirectWrap"></mat-card-subtitle>
     <mat-card-content>
-      <mat-form-field appearance="standard">
-        <mat-label translate>login-page.labels.login</mat-label>
-        <input matInput type="email" required="required" [(ngModel)]="email" [disabled]="isSendingRequest"/>
-      </mat-form-field>
-      <mat-form-field appearance="standard">
-        <mat-label translate>login-page.labels.password</mat-label>
-        <input matInput type="password" required="required" [(ngModel)]="password" [disabled]="isSendingRequest"/>
-      </mat-form-field>
+      <div>
+        <mat-form-field appearance="standard">
+          <mat-label translate>login-page.labels.login</mat-label>
+          <input matInput
+                 type="email"
+                 required="required"
+                 [(ngModel)]="email"
+                 [disabled]="isSendingRequest"
+                 name="email"/>
+        </mat-form-field>
+        <mat-form-field appearance="standard">
+          <mat-label translate>login-page.labels.password</mat-label>
+          <input matInput
+                 type="password"
+                 required="required"
+                 [(ngModel)]="password"
+                 [disabled]="isSendingRequest"
+                 name="password"/>
+        </mat-form-field>
+      </div>
     </mat-card-content>
     <mat-card-actions>
       <button mat-button color="primary" [disabled]="isSendingRequest" translate>login-page.submit</button>
     </mat-card-actions>
   </mat-card>
-</ng-form>
+</form>
