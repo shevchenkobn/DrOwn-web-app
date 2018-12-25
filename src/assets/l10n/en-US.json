@@ -6,5 +6,19 @@
   "not-found-page": {
     "title": "Page not found",
     "description": "The requested path {{path}} is not found"
+  },
+  "login-page": {
+    "title": "Login form",
+    "labels": {
+      "login": "Login",
+      "password": "Password"
+    },
+    "submit": "Log in",
+    "redirect": "You will be automatically redirected to {{redirect}}",
+    "home": "your home page",
+    "error": {
+      "msg": "Invalid login or password",
+      "ok": "OK"
+    }
   }
 }

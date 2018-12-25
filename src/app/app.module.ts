@@ -45,12 +45,13 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { SidenavComponent } from './sidenav/sidenav.component';
-import { L10nService } from './_services/l10n.service';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { JwtModule } from '@auth0/angular-jwt';
-import { AuthService } from './_auth/auth.service';
-import { environment } from '../environments/environment';
 import { httpInterceptorProviders } from './_interceptors';
+import { UsersComponent } from './users/users.component';
+import { LoginComponent } from './login/login.component';
+import { ProgressSpinnerComponent } from './progress-spinner/progress-spinner.component';
+import { AppOverlayModule } from './_modules/overlay/overlay.module';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/l10n/', '.json');
@@ -61,6 +62,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppComponent,
     SidenavComponent,
     PageNotFoundComponent,
+    UsersComponent,
+    LoginComponent,
+    ProgressSpinnerComponent,
   ],
   imports: [
     BrowserModule,
@@ -122,6 +126,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatToolbarModule,
     MatTooltipModule,
     MatTreeModule,
+
+    AppOverlayModule,
   ],
   providers: [
     httpInterceptorProviders,

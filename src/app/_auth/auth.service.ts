@@ -3,9 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { HttpUrlHelper } from '../_http/http-url.helper';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { map, shareReplay, tap } from 'rxjs/operators';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { IUser, UserRoles } from '../../_model/user.model';
-import { UrlSegment } from '@angular/router';
+import { ActivatedRouteSnapshot } from '@angular/router';
 
 interface Tokens {
   accessToken: string;
@@ -49,7 +49,7 @@ export class AuthService {
   protected _tokenUpdate$?: Observable<string>;
   protected _user?: IUser;
   public readonly jwt: JwtHelperService;
-  public redirectUrl?: UrlSegment[];
+  public redirectUrl?: ActivatedRouteSnapshot[];
 
   public static getAccessToken() {
     return localStorage.getItem(this.LOCAL_STORAGE_ACCESS_TOKEN);

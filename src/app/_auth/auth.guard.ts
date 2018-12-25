@@ -33,7 +33,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     childRoute: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return this.checkAuthAndRole(next);
+    return this.checkAuthAndRole(childRoute);
   }
 
   private checkAuthAndRole(next: ActivatedRouteSnapshot) {
@@ -41,7 +41,10 @@ export class AuthGuard implements CanActivate, CanActivateChild {
       this.redirectToLogin(next);
       return false;
     }
-    const requiredRoles = next.data['authRoles'] as UserRoles;
+    const requiredRoles = next.data['authRoles'] as UserRoles | undefined;
+    if (typeof requiredRoles !== 'number') {
+      return true;
+    }
     if (this._auth.hasUser()) {
       return this.checkRole(this._auth.getUser(), requiredRoles);
     }
@@ -51,12 +54,12 @@ export class AuthGuard implements CanActivate, CanActivateChild {
   }
 
   private redirectToLogin(next: ActivatedRouteSnapshot) {
-    this._auth.redirectUrl = next.url;
+    this._auth.redirectUrl = next.pathFromRoot;
     this.navigate(AuthService.LOGIN_ROUTE);
   }
 
   private navigate(path: string) {
-    this._router.navigate([path]).catch(reason => {
+    this._router.navigateByUrl(path).catch(reason => {
       console.error('From AuthGuard: ', reason);
     });
   }
