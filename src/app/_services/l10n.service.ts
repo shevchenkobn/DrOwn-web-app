@@ -40,7 +40,8 @@ export class L10nService {
   private init() {
     this.translate.addLangs(locales);
 
-    let locale = this.translate.getDefaultLang() || localStorage.getItem(LOCALE_KEY);
+    let locale = localStorage.getItem(LOCALE_KEY);
+    // let locale = this.translate.getDefaultLang() || localStorage.getItem(LOCALE_KEY);
     if (!locale) {
       const localePieces = this.translate.getBrowserCultureLang().split(/[_-]/g);
       localePieces[1] = localePieces[1].toUpperCase();
