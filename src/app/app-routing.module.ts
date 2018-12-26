@@ -13,6 +13,7 @@ import { AuthGuard } from './_auth/auth.guard';
 import { LoginGuard } from './_guards/login.guard';
 import { UsersComponent } from './users/users.component';
 import { LoginComponent } from './login/login.component';
+import { ProfileComponent } from './profile/profile.component';
 
 export const dashboardPaths = {
   users: 'users',
@@ -28,14 +29,15 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
     children: [
       // { path: 'drones' }
+      { path: 'profile', component: ProfileComponent }
     ]
   },
 
   // { path: dashboardPaths.drones, canActivate: [AuthGuard] },
-  // { path: '/home', canActivate: [AuthGuard], pathMatch: 'full', redirectTo: '/home/profile' },
+  { path: 'home', canActivate: [AuthGuard], pathMatch: 'full', redirectTo: '/home/profile' },
   {
     path: '',
-    canActivate: [AuthGuard, HomeGuard],
+    canActivate: [HomeGuard],
     pathMatch: 'full',
     component: PageNotFoundComponent
   },

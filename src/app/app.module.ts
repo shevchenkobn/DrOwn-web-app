@@ -53,6 +53,7 @@ import { LoginComponent } from './login/login.component';
 import { ProgressSpinnerComponent } from './progress-spinner/progress-spinner.component';
 import { AppOverlayModule } from './_modules/overlay/overlay.module';
 import { FormsModule } from '@angular/forms';
+import { ProfileComponent } from './profile/profile.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/l10n/', '.json');
@@ -66,6 +67,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     UsersComponent,
     LoginComponent,
     ProgressSpinnerComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,

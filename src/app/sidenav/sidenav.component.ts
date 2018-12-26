@@ -28,17 +28,8 @@ export class SidenavComponent implements OnInit, OnDestroy {
     'uk-UA': 'Українська',
     'en-US': 'English (US)',
   });
-  public routes = routes;
   private onLoginChange$!: Subscription;
-  private onUserRefresh$!: Subscription;
-
-  public user?: Readonly<IUser>;
-
   public isLoggedIn: boolean;
-
-  private _userSetter = (user: Readonly<IUser> | undefined) => {
-    this.user = user;
-  }
 
   constructor(l10nService: L10nService, authService: AuthService, router: Router) {
     this.l10n = l10nService;
@@ -47,7 +38,6 @@ export class SidenavComponent implements OnInit, OnDestroy {
 
     this.activeLocale = l10nService.translate.getDefaultLang();
     this.isLoggedIn = this._auth.isLoggedIn();
-    this.updateUser();
   }
 
   public selectLocale(locale: string) {
@@ -65,27 +55,11 @@ export class SidenavComponent implements OnInit, OnDestroy {
   public ngOnInit() {
     this.onLoginChange$ = this._auth.onLoginChange.subscribe(isLoggedIn => {
       this.isLoggedIn = isLoggedIn;
-      this.updateUser();
     });
-    this.onUserRefresh$ = this._auth.onUserRefresh.subscribe(this._userSetter);
   }
 
   public ngOnDestroy() {
     this.onLoginChange$.unsubscribe();
-    this.onUserRefresh$.unsubscribe();
-  }
-
-  private updateUser() {
-    if (!this.isLoggedIn) {
-      return;
-    }
-    if (this._auth.hasUser()) {
-      this.user = this._auth.getUser();
-    } else {
-      this._auth.refreshUser().subscribe(this._userSetter, err => {
-        console.error('From sidenav updateUser ', err);
-      });
-    }
   }
 
 }
