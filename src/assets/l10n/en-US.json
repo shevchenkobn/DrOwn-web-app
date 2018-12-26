@@ -14,10 +14,13 @@
       "password": "Password"
     },
     "submit": "Log in",
-    "redirect": "You will be automatically redirected to {{redirect}}",
+    "redirect": "After entering your credentials, you will be automatically redirected to {{redirect}}",
     "home": "your home page",
     "error": {
-      "msg": "Invalid login or password",
+      "client-msg": "Invalid login or password",
+      "msg": "Networking error, try again",
+      "email": "Enter valid email",
+      "password": "Enter your password",
       "ok": "OK"
     }
   }

@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
-import { UserRoles } from '../../_model/user.model';
+import { IUser, UserRoles } from '../_model/user.model';
 import { AuthService } from '../_auth/auth.service';
+import { map, switchMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,15 @@ export class HomeGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
-    const user = this._auth.getUser();
+    if (!this._auth.hasUser()) {
+      return this._auth.refreshUser().pipe(
+        map(user => this.routeByRole(user)),
+      );
+    }
+    return this.routeByRole(this._auth.getUser());
+  }
+
+  private routeByRole(user: IUser) {
     if (user.role & UserRoles.ADMIN) {
       this.redirect('/users');
     } else if (

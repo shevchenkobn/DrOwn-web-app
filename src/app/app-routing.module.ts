@@ -47,19 +47,19 @@ export const routes: Routes = [
     RouterModule.forRoot(routes, {
       // enableTracing: !environment.production,
     }),
-    LocalizeRouterModule.forRoot(routes, {
-      parser: {
-        provide: LocalizeParser,
-        useFactory: (
-          translate: TranslateService,
-          location: Location,
-          settings: LocalizeRouterSettings,
-          http: HttpClient,
-        ) =>
-          new LocalizeRouterHttpLoader(translate, location, settings, http),
-        deps: [TranslateService, Location, LocalizeRouterSettings, HttpClient],
-      },
-    }),
+    // LocalizeRouterModule.forRoot(routes, {
+    //   parser: {
+    //     provide: LocalizeParser,
+    //     useFactory: (
+    //       translate: TranslateService,
+    //       location: Location,
+    //       settings: LocalizeRouterSettings,
+    //       http: HttpClient,
+    //     ) =>
+    //       new LocalizeRouterHttpLoader(translate, location, settings, http),
+    //     deps: [TranslateService, Location, LocalizeRouterSettings, HttpClient],
+    //   },
+    // }),
   ],
   exports: [RouterModule],
 })

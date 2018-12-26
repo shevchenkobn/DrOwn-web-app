@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { L10nService } from '../_services/l10n.service';
 import { getFullPath } from '../_utils';
 import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material';
+import { finalize } from 'rxjs/operators';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -38,7 +40,11 @@ export class LoginComponent implements OnInit {
   }
 
   submit() {
-    this._auth.login(this.email, this.password).subscribe(
+    this._auth.login(this.email, this.password).pipe(
+      finalize(() => {
+        this.isSendingRequest = false;
+      })
+    ).subscribe(
       () => {
         if (this._lastSnackBar) {
           this._lastSnackBar.dismiss();
@@ -48,20 +54,20 @@ export class LoginComponent implements OnInit {
         });
       },
       err => {
+        const msg = err instanceof HttpErrorResponse && (err.status - (err.status % 100)) === 4
+          ? 'login-page.error.client-msg'
+          : 'login-page.error.msg';
         console.error(err);
-        this.l10n.translate.get(['login-page.error.msg', 'login-page.error.ok']).subscribe(
+        this.l10n.translate.get([msg, 'login-page.error.ok']).subscribe(
           translations => {
             if (this._lastSnackBar) {
               this._lastSnackBar.dismiss();
             }
             this._lastSnackBar = this._snackBar
-              .open(translations['login-page.error.msg'], translations['login-page.error.ok']);
+              .open(translations[msg], translations['login-page.error.ok']);
           }
         );
-      },
-      () => {
-        this.isSendingRequest = false;
-      },
+      }
     );
     this.password = '';
     this.isSendingRequest = true;
@@ -69,20 +75,27 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.updateRedirectUrl();
-    this.updateRedirectMessage();
+    this.setRedirectMessage();
   }
 
   protected updateRedirectUrl() {
-    this._redirectUrl = this._auth.redirectUrl ? getFullPath(this._auth.redirectUrl) : '/home';
+    this._redirectUrl = this._auth.redirectUrl ? getFullPath(this._auth.redirectUrl, false) : '/';
   }
 
-  protected updateRedirectMessage() {
+  protected setRedirectMessage() {
     if (this._auth.redirectUrl) {
       this.redirectWrap.redirect = `<strong>${this._redirectUrl}</strong>`;
     } else {
-      this.l10n.translate.get('login-page.home').subscribe(translation => {
-        this.redirectWrap.redirect = translation;
+      this.l10n.translate.onLangChange.subscribe(() => {
+        this.updateRedirectMessage();
       });
     }
+  }
+
+  protected updateRedirectMessage() {
+    this.l10n.translate.get('login-page.home').subscribe(translation => {
+      this.redirectWrap.redirect = translation;
+      console.log(translation);
+    });
   }
 }

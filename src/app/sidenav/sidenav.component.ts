@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { L10nService } from '../_services/l10n.service';
 import { MatSelectionList } from '@angular/material';
 import { routes } from '../app-routing.module';
+import { LocalizeRouterService } from 'localize-router';
 
 const localeNames = {
   'uk-UA': 'Українська',

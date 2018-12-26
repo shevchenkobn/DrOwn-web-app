@@ -1,1 +1,3 @@
-["en-US", "uk-US"]
+{
+  "locales": ["en-US", "uk-UA"]
+}

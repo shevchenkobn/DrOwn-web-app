@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpUrlHelper } from '../_http/http-url.helper';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { map, shareReplay, tap } from 'rxjs/operators';
+import { finalize, map, shareReplay, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { IUser, UserRoles } from '../../_model/user.model';
+import { IUser, UserRoles } from '../_model/user.model';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 interface Tokens {
@@ -36,9 +36,9 @@ export class AuthService {
   //   AuthService.DRONES_PATH,
   // ];
   public static readonly NO_AUTH_PATHS: ReadonlyArray<[string, ReadonlyArray<string>?]> = [
-    [HttpUrlHelper.getUrl(AuthService.DRONES_PATH), ['GET']],
-    [HttpUrlHelper.getUrl(AuthService.DRONE_PRICES_PATH), ['GET']],
-    [HttpUrlHelper.getUrl(AuthService.AUTH_BASE_PATH)],
+    [AuthService.DRONES_PATH, ['GET']],
+    [AuthService.DRONE_PRICES_PATH, ['GET']],
+    [AuthService.AUTH_BASE_PATH],
   ];
 
   public static readonly LOGIN_ROUTE = '/login';
@@ -52,7 +52,7 @@ export class AuthService {
   public redirectUrl?: ActivatedRouteSnapshot[];
 
   public static getAccessToken() {
-    return localStorage.getItem(this.LOCAL_STORAGE_ACCESS_TOKEN);
+    return localStorage.getItem(AuthService.LOCAL_STORAGE_ACCESS_TOKEN);
   }
 
   constructor(http: HttpClient) {
@@ -75,6 +75,9 @@ export class AuthService {
       accessToken,
       refreshToken,
     }, { observe: 'body' }).pipe(
+      finalize(() => {
+        this._tokenUpdate$ = undefined;
+      }),
       tap(tokens => {
         localStorage.setItem(AuthService.LOCAL_STORAGE_REFRESH_TOKEN, tokens.refreshToken);
         localStorage.setItem(AuthService.LOCAL_STORAGE_ACCESS_TOKEN, tokens.accessToken);
@@ -104,13 +107,16 @@ export class AuthService {
       throw new Error('No login needed');
     }
 
+    this._email = email;
     this._login$ = this._http.post<Tokens>(AuthService.AUTH_LOGIN_PATH, {
       email,
       password,
     }, { observe: 'body' }).pipe(
-      tap(tokens => {
+      finalize(() => {
         this._email = '';
         this._login$ = undefined;
+      }),
+      tap(tokens => {
         localStorage.setItem(AuthService.LOCAL_STORAGE_REFRESH_TOKEN, tokens.refreshToken);
         localStorage.setItem(AuthService.LOCAL_STORAGE_ACCESS_TOKEN, tokens.accessToken);
       }),

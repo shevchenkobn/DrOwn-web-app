@@ -7,7 +7,7 @@ import {
 } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
-import { IUser, UserRoles } from '../../_model/user.model';
+import { IUser, UserRoles } from '../_model/user.model';
 import { map } from 'rxjs/operators';
 
 @Injectable({

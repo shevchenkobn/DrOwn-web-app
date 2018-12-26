@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Location } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
+import { LocalizeRouterService } from 'localize-router';
 
 const LOCALE_KEY = 'locale';
 const locales = ['en-US', 'uk-UA'];
@@ -11,11 +12,16 @@ const defaultLocale = locales[0];
 })
 export class L10nService {
   public translate: TranslateService;
+  // public localizeRouter: LocalizeRouterService;
   // private _location: Location;
 
-  constructor(translate: TranslateService) {
+  constructor(
+    translate: TranslateService,
+    // localizeRouter: LocalizeRouterService
+  ) {
     // this._location = location;
     this.translate = translate;
+    // this.localizeRouter = localizeRouter;
 
     this.init();
   }
@@ -24,14 +30,17 @@ export class L10nService {
     if (!locales.includes(lang)) {
       throw new TypeError(`Unknown locale: ${lang}`);
     }
-    this.translate.setDefaultLang(lang);
+    // this.localizeRouter.changeLanguage(lang);
+
+    this.translate.use(lang);
+    // this.translate.setDefaultLang(lang);
     localStorage.setItem(LOCALE_KEY, lang);
   }
 
   private init() {
     this.translate.addLangs(locales);
 
-    let locale = localStorage.getItem(LOCALE_KEY);
+    let locale = this.translate.getDefaultLang() || localStorage.getItem(LOCALE_KEY);
     if (!locale) {
       const localePieces = this.translate.getBrowserCultureLang().split(/[_-]/g);
       localePieces[1] = localePieces[1].toUpperCase();

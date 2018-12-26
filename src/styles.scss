@@ -1,10 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
-@import "~@angular/material/theming";
-
-//$accent: mat-palette($mat-green, A200, A100, A400);
-$accent: mat-palette($mat-pink);
 
 html {
   height: 100%;
@@ -36,6 +32,7 @@ app-root {
   padding-left: 1em;
 }
 
-//.mat-background-accent {
-//  background-color: mat-color($accent, 300);
-//}
+.fit-parent-width {
+  display: block;
+  width: 100%;
+}
