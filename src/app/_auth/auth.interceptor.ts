@@ -22,14 +22,12 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 
   public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    let request: HttpRequest<any>;
     if (AuthService.NO_AUTH_PATHS.some(([path, methods]) => (
       req.url.startsWith(path) && (!methods || methods.includes(req.method))
     ))) {
-      request = req;
-    } else {
-      request = this.addAuthHeader(req);
+      return next.handle(req);
     }
+    const request = this.addAuthHeader(req);
     return next.handle(request).pipe(
       catchError(err => {
         if (

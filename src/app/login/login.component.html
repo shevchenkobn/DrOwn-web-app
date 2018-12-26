@@ -1,15 +1,16 @@
 <form (ngSubmit)="submit()" #loginForm="ngForm">
-  <app-progress-spinner class="example-margin"
-                        color="primary"
-                        mode="indeterminate"
-                        value="50"
-                        backdropEnabled="true"
-                        [displayProgressSpinner]="isSendingRequest">
-  </app-progress-spinner>
+  <!--<app-progress-spinner class="example-margin"-->
+                        <!--color="primary"-->
+                        <!--mode="indeterminate"-->
+                        <!--value="50"-->
+                        <!--backdropEnabled="true"-->
+                        <!--[displayProgressSpinner]="isSendingRequest">-->
+  <!--</app-progress-spinner>-->
   <mat-card>
     <mat-card-title translate>login-page.title</mat-card-title>
     <mat-card-subtitle [innerHTML]="'login-page.redirect' | translate:redirectWrap"></mat-card-subtitle>
     <mat-card-content>
+      <mat-progress-bar mode="indeterminate" [style.visibility]="isSendingRequest ? 'visible' : 'hidden'"></mat-progress-bar>
       <mat-form-field appearance="standard" class="fit-parent-width">
         <mat-label translate>login-page.labels.login</mat-label>
         <input matInput #emailInput="ngModel"
@@ -33,7 +34,7 @@
       </mat-form-field>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-button color="primary" [disabled]="loginForm.form.pristine || loginForm.form.invalid || isSendingRequest">{{ 'login-page.submit' | translate }}</button>
+      <button mat-raised-button color="primary" [disabled]="loginForm.form.pristine || loginForm.form.invalid || isSendingRequest">{{ 'login-page.submit' | translate }}</button>
     </mat-card-actions>
   </mat-card>
 </form>

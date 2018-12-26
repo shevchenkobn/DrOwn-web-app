@@ -1,17 +1,49 @@
-<script src="sidenav.component.ts"></script>
 <mat-nav-list>
-  <h3 matSubheader>{{ 'navigation' | translate }}</h3>
-  <mat-list-item>
-    <mat-icon>account_circle</mat-icon>
-    <span class="mat-icon-label right">{{ 'profile' | translate }}</span>
+  <a mat-list-item
+     *ngIf="!isLoggedIn"
+     [routerLink]="['/login']">
+    <mat-icon mat-list-icon>exit_to_app</mat-icon>
+    <span>{{ 'nav.login' | translate }}</span>
+  </a>
+  <a mat-list-item
+     *ngIf="isLoggedIn"
+     [routerLink]="['/home/profile']">
+    <mat-icon mat-list-icon>account_circle</mat-icon>
+    <span>{{ 'nav.profile' | translate }}</span>
+  </a>
+  <a mat-list-item
+     *ngIf="isLoggedIn"
+     [routerLink]="['/home/drones']">
+    <mat-icon mat-list-icon>devices</mat-icon>
+    <span>{{ 'nav.my-drones' | translate }}</span>
+  </a>
+  <mat-list-item mat-list-item
+                 *ngIf="isLoggedIn"
+                 (click)="logout()">
+    <mat-icon mat-list-icon>exit_to_app</mat-icon>
+    <span>{{ 'nav.logout' | translate }}</span>
   </mat-list-item>
+
+  <h3 matSubheader>{{ 'nav.navigation' | translate }}</h3>
+
+  <a mat-list-item
+     [routerLink]="['/drones']">
+    <mat-icon mat-list-icon>flight_takeoff</mat-icon>
+    <span>{{ 'nav.drones' | translate }}</span>
+  </a>
+  <a mat-list-item
+     *ngIf="isLoggedIn"
+     [routerLink]="['/users']">
+    <mat-icon mat-list-icon>people</mat-icon>
+    <span>{{ 'nav.users' | translate }}</span>
+  </a>
 </mat-nav-list>
 <mat-divider></mat-divider>
 <mat-expansion-panel>
   <mat-expansion-panel-header>
     <mat-panel-title>
       <mat-icon>translate</mat-icon>
-      <span class="mat-icon-label right">{{ 'languages' | translate }}</span>
+      <span class="mat-icon-label right">{{ 'nav.languages' | translate }}</span>
     </mat-panel-title>
     <mat-panel-description>
     </mat-panel-description>

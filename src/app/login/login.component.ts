@@ -54,7 +54,7 @@ export class LoginComponent implements OnInit {
         });
       },
       err => {
-        const msg = err instanceof HttpErrorResponse && (err.status - (err.status % 100)) === 4
+        const msg = err instanceof HttpErrorResponse && (err.status - (err.status % 100)) === 400
           ? 'login-page.error.client-msg'
           : 'login-page.error.msg';
         console.error(err);
@@ -89,13 +89,13 @@ export class LoginComponent implements OnInit {
       this.l10n.translate.onLangChange.subscribe(() => {
         this.updateRedirectMessage();
       });
+      this.updateRedirectMessage();
     }
   }
 
   protected updateRedirectMessage() {
     this.l10n.translate.get('login-page.home').subscribe(translation => {
       this.redirectWrap.redirect = translation;
-      console.log(translation);
     });
   }
 }

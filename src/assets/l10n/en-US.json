@@ -1,8 +1,14 @@
 {
-  "test": "Hello World",
-  "languages": "Language",
-  "navigation": "Navigation",
-  "profile": "Profile",
+  "nav": {
+    "languages": "Language",
+    "navigation": "Navigation",
+    "profile": "Profile",
+    "users": "Users",
+    "drones": "Drones",
+    "my-drones": "My Drones",
+    "login": "Log in",
+    "logout": "Log out"
+  },
   "not-found-page": {
     "title": "Page not found",
     "description": "The requested path {{path}} is not found"

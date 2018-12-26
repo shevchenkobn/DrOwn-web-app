@@ -21,6 +21,10 @@ export class HomeGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
+    if (!this._auth.isLoggedIn()) {
+      this.redirect('/drones');
+      return false;
+    }
     if (!this._auth.hasUser()) {
       return this._auth.refreshUser().pipe(
         map(user => this.routeByRole(user)),

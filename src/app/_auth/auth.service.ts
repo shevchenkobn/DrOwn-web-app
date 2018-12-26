@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { HttpUrlHelper } from '../_http/http-url.helper';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { finalize, map, shareReplay, tap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { IUser, UserRoles } from '../_model/user.model';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
@@ -36,9 +36,9 @@ export class AuthService {
   //   AuthService.DRONES_PATH,
   // ];
   public static readonly NO_AUTH_PATHS: ReadonlyArray<[string, ReadonlyArray<string>?]> = [
-    [AuthService.DRONES_PATH, ['GET']],
-    [AuthService.DRONE_PRICES_PATH, ['GET']],
-    [AuthService.AUTH_BASE_PATH],
+    [HttpUrlHelper.getUrl(AuthService.DRONES_PATH), ['GET']],
+    [HttpUrlHelper.getUrl(AuthService.DRONE_PRICES_PATH), ['GET']],
+    [HttpUrlHelper.getUrl(AuthService.AUTH_BASE_PATH)],
   ];
 
   public static readonly LOGIN_ROUTE = '/login';
@@ -47,9 +47,16 @@ export class AuthService {
   protected _email = '';
   protected _login$?: Observable<string>;
   protected _tokenUpdate$?: Observable<string>;
-  protected _user?: IUser;
+  protected _user?: Readonly<IUser>;
   public readonly jwt: JwtHelperService;
   public redirectUrl?: ActivatedRouteSnapshot[];
+
+  public onLoginChange: Observable<boolean>;
+  public onTokenRefresh: Observable<string>;
+  public onUserRefresh: Observable<Readonly<IUser> | undefined>;
+  protected _onLoginChange: Subject<boolean>;
+  protected _onTokenRefresh: Subject<string>;
+  protected _onUserRefresh: Subject<Readonly<IUser> | undefined>;
 
   public static getAccessToken() {
     return localStorage.getItem(AuthService.LOCAL_STORAGE_ACCESS_TOKEN);
@@ -60,6 +67,13 @@ export class AuthService {
     this.jwt = new JwtHelperService({
       tokenGetter: AuthService.getAccessToken,
     });
+
+    this._onLoginChange = new Subject<boolean>();
+    this.onLoginChange = this._onLoginChange.asObservable();
+    this._onTokenRefresh = new Subject<string>();
+    this.onTokenRefresh = this._onTokenRefresh.asObservable();
+    this._onUserRefresh = new Subject<Readonly<IUser> | undefined>();
+    this.onUserRefresh = this._onUserRefresh.asObservable();
   }
 
   public refreshToken() {
@@ -81,6 +95,8 @@ export class AuthService {
       tap(tokens => {
         localStorage.setItem(AuthService.LOCAL_STORAGE_REFRESH_TOKEN, tokens.refreshToken);
         localStorage.setItem(AuthService.LOCAL_STORAGE_ACCESS_TOKEN, tokens.accessToken);
+
+        this._onTokenRefresh.next(tokens.accessToken);
       }),
       map(tokens => tokens.accessToken),
       shareReplay()
@@ -119,6 +135,7 @@ export class AuthService {
       tap(tokens => {
         localStorage.setItem(AuthService.LOCAL_STORAGE_REFRESH_TOKEN, tokens.refreshToken);
         localStorage.setItem(AuthService.LOCAL_STORAGE_ACCESS_TOKEN, tokens.accessToken);
+        this._onLoginChange.next(true);
       }),
       map(tokens => tokens.accessToken),
       shareReplay(),
@@ -129,6 +146,10 @@ export class AuthService {
   public logout() {
     localStorage.removeItem(AuthService.LOCAL_STORAGE_REFRESH_TOKEN);
     localStorage.removeItem(AuthService.LOCAL_STORAGE_ACCESS_TOKEN);
+    localStorage.removeItem(AuthService.LOCAL_STORAGE_USER);
+    this._user = undefined;
+    this._onUserRefresh.next(undefined);
+    this._onLoginChange.next(false);
   }
 
   public hasUser() {
@@ -152,6 +173,7 @@ export class AuthService {
       tap(user => {
         localStorage.setItem(AuthService.LOCAL_STORAGE_USER, JSON.stringify(user));
         this._user = user;
+        this._onUserRefresh.next(user);
       }),
       shareReplay()
     );
