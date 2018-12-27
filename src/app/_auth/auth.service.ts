@@ -169,6 +169,9 @@ export class AuthService {
   }
 
   public refreshUser() {
+    if (!this.isLoggedIn()) {
+      throw new Error('Needs login');
+    }
     return this._http.get<IUser>(AuthService.PROFILE_PATH).pipe(
       tap(user => {
         localStorage.setItem(AuthService.LOCAL_STORAGE_USER, JSON.stringify(user));

@@ -21,10 +21,6 @@ export class HomeGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
-    if (!this._auth.isLoggedIn()) {
-      this.redirect('/drones');
-      return false;
-    }
     if (!this._auth.hasUser()) {
       return this._auth.refreshUser().pipe(
         map(user => this.routeByRole(user)),
@@ -38,8 +34,6 @@ export class HomeGuard implements CanActivate {
       this.redirect('/users');
     } else if (
       user.role & UserRoles.OWNER
-      || user.role & UserRoles.PRODUCER
-      || user.role & UserRoles.LANDLORD
     ) {
       this.redirect('/home/drones');
     } else if (user.role & UserRoles.CUSTOMER) {

@@ -44,7 +44,7 @@ export const routes: Routes = [
   { path: 'home', canActivate: [AuthGuard], pathMatch: 'full', redirectTo: '/home/profile' },
   {
     path: '',
-    canActivate: [HomeGuard],
+    canActivate: [AuthGuard, HomeGuard],
     pathMatch: 'full',
     component: PageNotFoundComponent
   },

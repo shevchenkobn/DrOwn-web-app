@@ -1,14 +1,7 @@
 export enum UserRoles {
   CUSTOMER = 0x1,
   OWNER = 0x2,
-  LANDLORD = 0x4,
-  PRODUCER = 0x8,
-  ADMIN = 0x10,
-}
-
-export enum UserStatus {
-  ACTIVE = 1,
-  BLOCKED = 2,
+  ADMIN = 0x4,
 }
 
 export interface IUser {
@@ -17,9 +10,6 @@ export interface IUser {
   role: UserRoles;
   name: string;
   cash: string;
-  status: UserStatus;
-  address?: string | null;
-  phoneNumber?: string | null;
   longitude?: number | null;
   latitude?: number | null;
 }
