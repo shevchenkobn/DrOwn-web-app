@@ -14,6 +14,7 @@ import { LoginGuard } from './_guards/login.guard';
 import { UsersComponent } from './users/users.component';
 import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
+import { ProfileResolver } from './_auth/profile.resolver';
 
 export const dashboardPaths = {
   users: 'users',
@@ -29,7 +30,13 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
     children: [
       // { path: 'drones' }
-      { path: 'profile', component: ProfileComponent }
+      {
+        path: 'profile',
+        component: ProfileComponent,
+        resolve: {
+          profile: ProfileResolver
+        }
+      }
     ]
   },
 
