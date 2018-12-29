@@ -10,15 +10,18 @@ import { AuthService } from './auth.service';
 import { Observable, throwError } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
 import { ServerErrorCode } from '../_services/error-codes';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthInterceptor implements HttpInterceptor {
   private _auth: AuthService;
+  private _router: Router;
 
-  constructor(authService: AuthService) {
+  constructor(authService: AuthService, router: Router) {
     this._auth = authService;
+    this._router = router;
   }
 
   public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -32,15 +35,28 @@ export class AuthInterceptor implements HttpInterceptor {
       catchError(err => {
         if (
           err instanceof HttpErrorResponse
-          && (
-            err.status === 401 || (
-              err.status === 403
-              && err.error && err.error.code === ServerErrorCode.AUTH_EXPIRED
-            )
-          )
+          && err.status === 403
+          && err.error && err.error.code === ServerErrorCode.AUTH_EXPIRED
         ) {
           return this._auth.refreshToken().pipe(
             switchMap(() => next.handle(this.addAuthHeader(request))),
+            catchError(refreshErr => {
+              if (
+                refreshErr instanceof HttpErrorResponse
+                && (
+                  (
+                    err.status === 403
+                    && err.error && err.error.code === ServerErrorCode.AUTH_EXPIRED
+                  ) || (
+                    err.status === 401
+                    && err.error && err.error.code === ServerErrorCode.AUTH_BAD
+                  )
+                )
+              ) {
+                this.handleRefreshExpire();
+              }
+              return throwError(refreshErr);
+            })
           );
         }
         return throwError(err);
@@ -53,6 +69,13 @@ export class AuthInterceptor implements HttpInterceptor {
       setHeaders: {
         'Authorization': `Bearer ${this._auth.jwt.tokenGetter()}`,
       }
+    });
+  }
+
+  private handleRefreshExpire() {
+    this._auth.logout();
+    this._router.navigateByUrl('/login').catch(err => {
+      console.error('From AuthInterceptor redirect to login')
     });
   }
 }

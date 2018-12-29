@@ -22,7 +22,9 @@ export class PageNotFoundComponent implements OnInit, OnDestroy {
 
   public ngOnInit() {
     this._route$ = this._route.url.subscribe(value => {
-      this.pathWrap.path = '<strong>' + value.join('/') + '</strong>/';
+      this.pathWrap = {
+        path: '<strong>' + value.join('/') + '</strong>/',
+      };
     });
   }
 

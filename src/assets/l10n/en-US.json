@@ -6,12 +6,17 @@
     "users": "Users",
     "drones": "Drones",
     "my-drones": "My Drones",
+    "my-transactions": "My Transactions",
     "login": "Log in",
     "logout": "Log out"
   },
   "not-found-page": {
     "title": "Page not found",
     "description": "The requested path {{path}} is not found"
+  },
+  "errors": {
+    "network": "Networking error, try again",
+    "ok": "OK"
   },
   "login-page": {
     "title": "Login form",
@@ -24,10 +29,46 @@
     "home": "your home page",
     "error": {
       "client-msg": "Invalid login or password",
-      "msg": "Networking error, try again",
       "email": "Enter valid email",
-      "password": "Enter your password",
-      "ok": "OK"
+      "password": "Enter your password"
     }
+  },
+  "profile": {
+    "update": {
+      "email-q": "Are you sure you want to change your email for login?"
+    },
+    "updated": {
+      "msg": "The profile was updated!",
+      "password": "The password was updated!",
+      "ok": "OK"
+    },
+    "password": {
+      "change-q": "Are you sure you want to change your password?",
+      "reset-q": "Are you sure you want to reset your password?",
+      "show": {
+        "title": "Your new password",
+        "note": "Make sure you remembered it",
+        "ok": "I got it!"
+      },
+      "change": {
+        "title": "Enter new password",
+        "password-label": "Password",
+        "no-password": "Password cannot be empty",
+        "password-confirmation": "Password confirmation",
+        "no-password-confirmation": "Password confirmation cannot be empty",
+        "password-mismatch": "Passwords don't match",
+        "ok": "Submit",
+        "cancel": "Cancel"
+      }
+    },
+    "errors": {
+      "email": "Email {{email}} is taken by other user",
+      "not-found": "Your profile was deleted from your other session",
+      "unknown": "Unknown error, try again"
+    }
+  },
+  "dialog": {
+    "yes": "Yes",
+    "no": "No"
   }
 }

@@ -8,11 +8,6 @@ import { Subscription } from 'rxjs';
 import { IUser } from '../_model/user.model';
 import { Router } from '@angular/router';
 
-const localeNames = {
-  'uk-UA': 'Українська',
-  'en-US': 'English (American)',
-};
-
 @Component({
   selector: 'app-sidenav',
   templateUrl: './sidenav.component.html',

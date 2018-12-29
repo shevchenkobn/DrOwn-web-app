@@ -52,8 +52,11 @@ import { UsersComponent } from './users/users.component';
 import { LoginComponent } from './login/login.component';
 import { ProgressSpinnerComponent } from './progress-spinner/progress-spinner.component';
 import { AppOverlayModule } from './_modules/overlay/overlay.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProfileComponent } from './profile/profile.component';
+import { ProfilePasswordChangeComponent } from './profile-password-change/profile-password-change.component';
+import { ProfileShowPasswordComponent } from './profile-show-password/profile-show-password.component';
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/l10n/', '.json');
@@ -68,11 +71,15 @@ export function HttpLoaderFactory(http: HttpClient) {
     LoginComponent,
     ProgressSpinnerComponent,
     ProfileComponent,
+    ProfilePasswordChangeComponent,
+    ProfileShowPasswordComponent,
+    ConfirmDialogComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
 
     AppOverlayModule,
 

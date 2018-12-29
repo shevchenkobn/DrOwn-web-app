@@ -1,8 +1,13 @@
+import { Maybe } from '../@types';
+
 export enum UserRoles {
   CUSTOMER = 0x1,
   OWNER = 0x2,
   ADMIN = 0x4,
 }
+
+export const minRole = 1;
+export const maxRole = 4;
 
 export interface IUser {
   userId: string;
@@ -12,6 +17,10 @@ export interface IUser {
   cash: string;
   longitude?: number | null;
   latitude?: number | null;
+}
+
+export interface IPasswordUser extends IUser {
+  password: Maybe<string>;
 }
 
 export function userRoleToArray(user: IUser): UserRoles[] {

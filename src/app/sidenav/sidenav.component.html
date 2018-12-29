@@ -17,13 +17,20 @@
     <mat-icon mat-list-icon>devices</mat-icon>
     <span>{{ 'nav.my-drones' | translate }}</span>
   </a>
+  <a mat-list-item
+     *ngIf="isLoggedIn"
+     [routerLink]="['/home/transactions']">
+    <mat-icon mat-list-icon>attach_money</mat-icon>
+    <span>{{ 'nav.my-transactions' | translate }}</span>
+  </a>
   <mat-list-item mat-list-item
                  *ngIf="isLoggedIn"
                  (click)="logout()">
     <mat-icon mat-list-icon>exit_to_app</mat-icon>
     <span>{{ 'nav.logout' | translate }}</span>
   </mat-list-item>
-
+</mat-nav-list>
+<mat-nav-list>
   <h3 matSubheader>{{ 'nav.navigation' | translate }}</h3>
 
   <a mat-list-item
@@ -32,7 +39,6 @@
     <span>{{ 'nav.drones' | translate }}</span>
   </a>
   <a mat-list-item
-     *ngIf="isLoggedIn"
      [routerLink]="['/users']">
     <mat-icon mat-list-icon>people</mat-icon>
     <span>{{ 'nav.users' | translate }}</span>

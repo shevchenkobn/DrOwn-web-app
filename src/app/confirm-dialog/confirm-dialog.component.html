@@ -1,0 +1,5 @@
+<h1 mat-dialog-title [innerHTML]="data.message | translate:data.messageParams"></h1>
+<div mat-dialog-actions>
+  <button mat-button (click)="dialogRef.close(true)" color="warn" translate>dialog.yes</button>
+  <button mat-button (click)="dialogRef.close(false)" color="primary" translate>dialog.no</button>
+</div>

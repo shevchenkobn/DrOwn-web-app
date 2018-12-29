@@ -181,4 +181,12 @@ export class AuthService {
       shareReplay()
     );
   }
+
+  public setUser(user: IUser) {
+    if (!this.isLoggedIn()) {
+      throw new Error('Not logged in, cannot set user');
+    }
+    this._user = user;
+    this._onUserRefresh.next(user);
+  }
 }

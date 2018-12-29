@@ -56,15 +56,15 @@ export class LoginComponent implements OnInit {
       err => {
         const msg = err instanceof HttpErrorResponse && (err.status - (err.status % 100)) === 400
           ? 'login-page.error.client-msg'
-          : 'login-page.error.msg';
+          : 'errors.network';
         console.error(err);
-        this.l10n.translate.get([msg, 'login-page.error.ok']).subscribe(
+        this.l10n.translate.get([msg, 'errors.ok']).subscribe(
           translations => {
             if (this._lastSnackBar) {
               this._lastSnackBar.dismiss();
             }
             this._lastSnackBar = this._snackBar
-              .open(translations[msg], translations['login-page.error.ok']);
+              .open(translations[msg], translations['errors.ok']);
           }
         );
       }
