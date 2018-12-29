@@ -1,6 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from '../_auth/auth.service';
-import { composeUserRoleFromArray, IUser, maxRole, minRole } from '../_model/user.model';
+import {
+  IUser,
+  maxRole,
+  minRole, userRoleFromObject,
+  userRoleNames, userRoleToObject,
+} from '../_model/user.model';
 import { Subscription } from 'rxjs';
 import { FormGroup, FormBuilder, Validators, FormControl, FormArray } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -39,9 +44,15 @@ export class ProfileComponent implements OnInit, OnDestroy {
   public passwordDialog?: MatDialogRef<ProfilePasswordChangeComponent, boolean>;
 
   public user!: Readonly<IUser>;
+  public userRoles!: {[role: string]: boolean};
+  public rolesNames = userRoleNames;
   public editMode!: boolean;
   public isMakingRequest!: boolean;
   public editUserGroup?: FormGroup;
+
+  get controls() {
+    return this.editUserGroup && this.editUserGroup.controls;
+  }
 
   private _userSetter = (user: Readonly<IUser> | undefined) => {
     this.user = user as IUser;
@@ -63,6 +74,17 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this._dialog = dialog;
     this.l10n = l10n;
     this._snackBar = snackBar;
+  }
+
+  refreshUser() {
+    this.isMakingRequest = true;
+    this._auth.refreshUser().pipe(
+      finalize(() => {
+        this.isMakingRequest = false;
+      })
+    ).subscribe(user => {
+      this.updateUser(user, false);
+    });
   }
 
   switchMode() {
@@ -95,6 +117,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
           );
         });
     });
+  }
+
+  toggleRole(roleName: string) {
+    this.userRoles[roleName] = !this.userRoles[roleName];
   }
 
   updateProfile() {
@@ -176,9 +202,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
     if (!this.editUserGroup) {
       this.editUserGroup = this._fb.group({
         email: ['', [Validators.required, Validators.email]],
-        role: this._fb.array([
-          this._fb.control('', [Validators.min(minRole), Validators.max(maxRole)]),
-        ]),
         name: ['', Validators.required],
         longitude: [''],
         latitude: [''],
@@ -189,32 +212,20 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   private populateFormWithUser() {
-
+    this.userRoles = userRoleToObject(this.user);
+    const form = this.editUserGroup as FormGroup;
+    form.setValue(this.user);
   }
 
   private getUserFromForm() {
     const updateUser = {} as Partial<IUser>;
     const form = this.editUserGroup as FormGroup;
-    /*
-    email: ['', [Validators.required, Validators.email]],
-    role: this._fb.array([
-      this._fb.control('', [Validators.min(minRole), Validators.max(maxRole)]),
-    ]),
-    name: ['', Validators.required],
-    longitude: [''],
-    latitude: [''],
-    cash: ['', [Validators.required, decimalValidator]],
-     */
+
     const emailControl = form.get('email') as FormControl;
     if (emailControl.dirty) {
       updateUser.email = emailControl.value;
     }
-    const rolesControl = form.get('role') as FormArray;
-    if (rolesControl.dirty) {
-      updateUser.role = composeUserRoleFromArray(
-        rolesControl.value.map((r: string) => Number.parseInt(r, 10))
-      );
-    }
+    updateUser.role = userRoleFromObject(this.userRoles);
     const nameControl = form.get('name') as FormControl;
     if (nameControl.dirty) {
       updateUser.name = nameControl.value;
@@ -234,9 +245,12 @@ export class ProfileComponent implements OnInit, OnDestroy {
     return updateUser;
   }
 
-  private updateUser(user: IUser) {
+  private updateUser(user: IUser, updateAuth = true) {
     this.user = user;
-    this._auth.setUser(user);
+    this.userRoles = userRoleToObject(user);
+    if (updateAuth) {
+      this._auth.setUser(user);
+    }
   }
 
   resetPassword() {
@@ -265,7 +279,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   public ngOnInit() {
     this.onUserRefresh$ = this._auth.onUserRefresh.subscribe(this._userSetter);
-    this.user = this._route.snapshot.data['profile'];
+    this.updateUser(this._route.snapshot.data['profile'], false);
     this.editMode = false;
     this.isMakingRequest = false;
   }

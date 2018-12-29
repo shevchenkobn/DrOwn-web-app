@@ -40,7 +40,6 @@ export const routes: Routes = [
     ]
   },
 
-  // { path: dashboardPaths.drones, canActivate: [AuthGuard] },
   { path: 'home', canActivate: [AuthGuard], pathMatch: 'full', redirectTo: '/home/profile' },
   {
     path: '',

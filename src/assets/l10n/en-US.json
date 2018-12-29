@@ -34,6 +34,8 @@
     }
   },
   "profile": {
+    "refresh": "Refresh profile",
+    "edit-mode": "Edit mode",
     "update": {
       "email-q": "Are you sure you want to change your email for login?"
     },
@@ -70,5 +72,23 @@
   "dialog": {
     "yes": "Yes",
     "no": "No"
+  },
+  "user": {
+    "email": "Email",
+    "password": "Password",
+    "role": "Roles",
+    "name": "Name",
+    "longitude": "Longitude",
+    "latitude": "Latitude",
+    "cash": "Cash"
+  },
+  "user-errors": {
+    "email": "Valid email is required",
+    "password": "",
+    "name": "Name is required",
+    "longitude": "Longitude must be a number",
+    "latitude": "Latitude must be a number",
+    "cash": "Cash must be a valid number",
+    "coords": "Both longitude and latitude must be present"
   }
 }

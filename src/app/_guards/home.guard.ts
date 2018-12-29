@@ -36,8 +36,6 @@ export class HomeGuard implements CanActivate {
       user.role & UserRoles.OWNER
     ) {
       this.redirect('/home/drones');
-    } else if (user.role & UserRoles.CUSTOMER) {
-      this.redirect('/drones');
     }
     return false;
   }

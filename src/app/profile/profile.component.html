@@ -1,6 +1,92 @@
-<p>
-  profile works!
-</p>
-<form>
+<mat-progress-bar mode="indeterminate" [style.visibility]="isMakingRequest ? 'visible' : 'hidden'"></mat-progress-bar>
+<mat-toolbar>
+  <mat-slide-toggle translate>profile.edit-mode</mat-slide-toggle>
+  <button mat-raised-button color="primary"
+          (click)="refreshUser()"
+          translate>profile.refresh</button>
+</mat-toolbar>
+<mat-list *ngIf="!editMode">
+  <mat-list-item>
+    <h4 mat-line>{{user.email}}</h4>
+    <p mat-line translate>user.email</p>
+  </mat-list-item>
+  <mat-list-item>
+    <mat-chip-list>
+      <ng-container *ngFor="let roleName of rolesNames">
+        <mat-chip *ngIf="userRoles[roleName]" color="primary">{{roleName}}</mat-chip>
+      </ng-container>
+    </mat-chip-list>
+    <p mat-line translate>user.role</p>
+  </mat-list-item>
+  <mat-list-item>
+    <h4 mat-line>{{user.name}}</h4>
+    <p mat-line translate>user.name</p>
+  </mat-list-item>
+  <mat-list-item>
+    <h4 mat-line>{{user.longitude}}</h4>
+    <p mat-line translate>user.longitude</p>
+  </mat-list-item>
+  <mat-list-item>
+    <h4 mat-line>{{user.latitude}}</h4>
+    <p mat-line translate>user.latitude</p>
+  </mat-list-item>
+  <mat-list-item>
+    <h4 mat-line>{{user.cash}}</h4>
+    <p mat-line translate>user.cash</p>
+  </mat-list-item>
+</mat-list>
 
-</form>
+
+<mat-list *ngIf="editMode">
+  <mat-list-item>
+    <mat-form-field>
+      <mat-label translate>user.email</mat-label>
+      <input matInput
+             type="email"
+             required="required"
+             formControlName="email"
+             [disabled]="isMakingRequest"
+             name="email"/>
+      <mat-error *ngIf="controls.email.errors" translate>user-errors.email</mat-error>
+    </mat-form-field>
+  </mat-list-item>
+  <mat-list-item>
+    <mat-chip-list>
+      <mat-chip *ngFor="let roleName of rolesNames"
+                (click)="toggleRole(roleName)"
+                [color]="userRoles[roleName] ? 'primary' : ''">{{roleName}}</mat-chip>
+    </mat-chip-list>
+  </mat-list-item>
+  <mat-list-item>
+    <mat-form-field>
+      <mat-label translate>user.name</mat-label>
+      <input matInput
+             type="text"
+             required="required"
+             formControlName="name"
+             [disabled]="isMakingRequest"
+             name="email"/>
+      <mat-error *ngIf="controls.name.errors" translate>user-errors.name</mat-error>
+    </mat-form-field>
+  </mat-list-item>
+  <mat-list-item>
+    <h4 mat-line>{{user.longitude}}</h4>
+    <p mat-line translate>user.longitude</p>
+  </mat-list-item>
+  <mat-list-item>
+    <h4 mat-line>{{user.latitude}}</h4>
+    <p mat-line translate>user.latitude</p>
+  </mat-list-item>
+  <mat-list-item>
+    <h4 mat-line>{{user.cash}}</h4>
+    <p mat-line translate>user.cash</p>
+  </mat-list-item>
+</mat-list>
+
+
+
+<mat-chip-list>
+  <mat-chip *ngFor="let roleName of rolesNames"
+            (click)="toggleRole(roleName)"
+            [color]="userRoles[roleName] ? 'primary' : ''">{{roleName}}</mat-chip>
+</mat-chip-list>
