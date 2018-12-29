@@ -17,7 +17,6 @@ export interface IUser {
   email: string;
   role: UserRoles;
   name: string;
-  cash: string;
   longitude?: number | null;
   latitude?: number | null;
 }

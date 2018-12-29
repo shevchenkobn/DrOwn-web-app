@@ -34,10 +34,12 @@
     }
   },
   "profile": {
+    "title": "Profile",
     "refresh": "Refresh profile",
     "edit-mode": "Edit mode",
     "update": {
-      "email-q": "Are you sure you want to change your email for login?"
+      "email-q": "Are you sure you want to change your email for login?",
+      "btn": "Update profile"
     },
     "updated": {
       "msg": "The profile was updated!",
@@ -47,6 +49,8 @@
     "password": {
       "change-q": "Are you sure you want to change your password?",
       "reset-q": "Are you sure you want to reset your password?",
+      "change-btn": "Change password",
+      "reset-btn": "Reset password",
       "show": {
         "title": "Your new password",
         "note": "Make sure you remembered it",
@@ -55,7 +59,7 @@
       "change": {
         "title": "Enter new password",
         "password-label": "Password",
-        "no-password": "Password cannot be empty",
+        "no-password": "Password must be not shorter than 6 characters have at least a letter, an uppercase letter, a digit and a symbol",
         "password-confirmation": "Password confirmation",
         "no-password-confirmation": "Password confirmation cannot be empty",
         "password-mismatch": "Passwords don't match",
@@ -79,16 +83,18 @@
     "role": "Roles",
     "name": "Name",
     "longitude": "Longitude",
-    "latitude": "Latitude",
-    "cash": "Cash"
+    "latitude": "Latitude"
   },
   "user-errors": {
     "email": "Valid email is required",
     "password": "",
     "name": "Name is required",
-    "longitude": "Longitude must be a number",
-    "latitude": "Latitude must be a number",
-    "cash": "Cash must be a valid number",
+    "longitude": "Longitude must be a number between -180 and 180",
+    "latitude": "Latitude must be a number between -90 and 90",
     "coords": "Both longitude and latitude must be present"
+  },
+  "user-roles": {
+    "OWNER": "Drone owner",
+    "ADMIN": "Admin"
   }
 }

@@ -23,7 +23,7 @@ export class ProfilePasswordChangeComponent implements OnInit {
     dialog: MatDialog
   ) {
     this.dialogRef = dialogRef;
-    this.dialogRef.disableClose = false;
+    this.dialogRef.disableClose = true;
     this.data = data;
     this._dialog = dialog;
   }
@@ -43,4 +43,7 @@ export class ProfilePasswordChangeComponent implements OnInit {
     });
   }
 
+  close() {
+    this.dialogRef.close('');
+  }
 }

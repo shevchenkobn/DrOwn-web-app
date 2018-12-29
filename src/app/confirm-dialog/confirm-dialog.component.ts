@@ -20,7 +20,7 @@ export class ConfirmDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) data: IConfirmDialogData,
   ) {
     this.dialogRef = dialogRef;
-    this.dialogRef.disableClose = false;
+    this.dialogRef.disableClose = true;
     this.data = data;
   }
 

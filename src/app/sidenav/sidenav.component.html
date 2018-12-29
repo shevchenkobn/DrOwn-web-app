@@ -12,16 +12,16 @@
     <span>{{ 'nav.profile' | translate }}</span>
   </a>
   <a mat-list-item
-     *ngIf="isLoggedIn"
+     *ngIf="isLoggedIn && hasRole(userRoles.OWNER)"
      [routerLink]="['/home/drones']">
-    <mat-icon mat-list-icon>devices</mat-icon>
+    <mat-icon mat-list-icon>flight_takeoff</mat-icon>
     <span>{{ 'nav.my-drones' | translate }}</span>
   </a>
   <a mat-list-item
-     *ngIf="isLoggedIn"
-     [routerLink]="['/home/transactions']">
-    <mat-icon mat-list-icon>attach_money</mat-icon>
-    <span>{{ 'nav.my-transactions' | translate }}</span>
+     [routerLink]="['/users']"
+     *ngIf="isLoggedIn && hasRole(userRoles.ADMIN)">
+    <mat-icon mat-list-icon>people</mat-icon>
+    <span>{{ 'nav.users' | translate }}</span>
   </a>
   <mat-list-item mat-list-item
                  *ngIf="isLoggedIn"
@@ -29,20 +29,6 @@
     <mat-icon mat-list-icon>exit_to_app</mat-icon>
     <span>{{ 'nav.logout' | translate }}</span>
   </mat-list-item>
-</mat-nav-list>
-<mat-nav-list>
-  <h3 matSubheader>{{ 'nav.navigation' | translate }}</h3>
-
-  <a mat-list-item
-     [routerLink]="['/drones']">
-    <mat-icon mat-list-icon>flight_takeoff</mat-icon>
-    <span>{{ 'nav.drones' | translate }}</span>
-  </a>
-  <a mat-list-item
-     [routerLink]="['/users']">
-    <mat-icon mat-list-icon>people</mat-icon>
-    <span>{{ 'nav.users' | translate }}</span>
-  </a>
 </mat-nav-list>
 <mat-divider></mat-divider>
 <mat-expansion-panel>

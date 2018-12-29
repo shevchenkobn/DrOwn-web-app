@@ -144,5 +144,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     httpInterceptorProviders,
   ],
   bootstrap: [AppComponent],
+  entryComponents: [
+    ProfileShowPasswordComponent,
+    ProfilePasswordChangeComponent,
+    ConfirmDialogComponent
+  ]
 })
 export class AppModule { }

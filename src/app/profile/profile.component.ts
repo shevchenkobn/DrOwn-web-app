@@ -2,21 +2,15 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from '../_auth/auth.service';
 import {
   IUser,
-  maxRole,
-  minRole, userRoleFromObject,
-  userRoleNames, userRoleToObject,
+  userRoleFromObject,
+  userRoleNames,
+  UserRoles,
+  userRoleToObject,
 } from '../_model/user.model';
 import { Subscription } from 'rxjs';
-import { FormGroup, FormBuilder, Validators, FormControl, FormArray } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { decimalValidator } from '../_validators/number.validator';
-import {
-  MatDialog,
-  MatDialogRef,
-  MatSnackBar,
-  MatSnackBarRef,
-  SimpleSnackBar,
-} from '@angular/material';
+import { MatDialog, MatDialogRef, MatSnackBar } from '@angular/material';
 import { ProfilePasswordChangeComponent } from '../profile-password-change/profile-password-change.component';
 import { UsersService } from '../_services/users.service';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
@@ -25,7 +19,11 @@ import { finalize } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { L10nService } from '../_services/l10n.service';
 import { ServerErrorCode } from '../_services/error-codes';
-import { coordsValidator } from '../_validators/coordinates.validator';
+import {
+  coordsValidator,
+  latitudeValidator,
+  longitudeValidator,
+} from '../_validators/coordinates.validator';
 
 @Component({
   selector: 'app-profile',
@@ -76,6 +74,14 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this._snackBar = snackBar;
   }
 
+  isAdmin() {
+    return this.user.role & UserRoles.ADMIN;
+  }
+
+  toggleRole(roleName: string) {
+    this.userRoles[roleName] = !this.userRoles[roleName];
+  }
+
   refreshUser() {
     this.isMakingRequest = true;
     this._auth.refreshUser().pipe(
@@ -88,15 +94,15 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   switchMode() {
-    this.editMode = !this.editMode;
-    if (this.editMode) {
-      this.initializeForm();
-    }
+    // this.editMode = !this.editMode;
+    this.populateFormWithUser();
   }
 
   changePassword() {
-    this.passwordDialog = this._dialog.open(ProfilePasswordChangeComponent);
     this._dialog.open(ProfilePasswordChangeComponent).afterClosed().subscribe((password: string) => {
+      if (!password) {
+        return;
+      }
       this.passwordDialog = undefined;
       this.isMakingRequest = true;
       this._users.updateUser({ userId: this.user.userId }, { password })
@@ -117,10 +123,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
           );
         });
     });
-  }
-
-  toggleRole(roleName: string) {
-    this.userRoles[roleName] = !this.userRoles[roleName];
   }
 
   updateProfile() {
@@ -203,18 +205,24 @@ export class ProfileComponent implements OnInit, OnDestroy {
       this.editUserGroup = this._fb.group({
         email: ['', [Validators.required, Validators.email]],
         name: ['', Validators.required],
-        longitude: [''],
-        latitude: [''],
-        cash: ['', [Validators.required, decimalValidator]],
-      }, { validators: [coordsValidator('longitude', 'latitude')] });
+        longitude: ['', longitudeValidator],
+        latitude: ['', latitudeValidator],
+      }, {
+        validators: [coordsValidator('longitude', 'latitude')],
+        updateOn: 'change'
+      });
     }
-    this.populateFormWithUser();
   }
 
   private populateFormWithUser() {
     this.userRoles = userRoleToObject(this.user);
     const form = this.editUserGroup as FormGroup;
-    form.setValue(this.user);
+    form.setValue({
+      email: this.user.email,
+      name: this.user.name,
+      longitude: this.user.longitude,
+      latitude: this.user.latitude
+    });
   }
 
   private getUserFromForm() {
@@ -238,16 +246,15 @@ export class ProfileComponent implements OnInit, OnDestroy {
     if (latitudeControl.dirty) {
       updateUser.latitude = Number.parseFloat(latitudeControl.value);
     }
-    const cashControl = form.get('cash') as FormControl;
-    if (cashControl.dirty) {
-      updateUser.cash = cashControl.value;
-    }
     return updateUser;
   }
 
   private updateUser(user: IUser, updateAuth = true) {
     this.user = user;
     this.userRoles = userRoleToObject(user);
+    if (this.editUserGroup) {
+      this.populateFormWithUser();
+    }
     if (updateAuth) {
       this._auth.setUser(user);
     }
@@ -261,7 +268,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     }).afterClosed().subscribe((yes: boolean) => {
       if (yes) {
         this.isMakingRequest = true;
-        this._users.updateUser({ userId: this.user.userId }, { password: '' })
+        this._users.updateUser({ userId: this.user.userId }, { password: '' }, true)
           .subscribe(user => {
             const password = user.password;
             delete user.password;
@@ -282,6 +289,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.updateUser(this._route.snapshot.data['profile'], false);
     this.editMode = false;
     this.isMakingRequest = false;
+    this.initializeForm();
   }
 
   public ngOnDestroy() {
