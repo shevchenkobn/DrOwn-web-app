@@ -1,3 +1,5 @@
+import { HttpErrorResponse } from '@angular/common/http';
+
 export enum ServerErrorCode {
   AUTH_NO = 'AUTH_NO',
   AUTH_ROLE = 'AUTH_ROLE',
@@ -43,4 +45,17 @@ export enum ServerErrorCode {
 
   SERVER = 'SERVER',
   NOT_FOUND = 'NOT_FOUND',
+}
+
+export function isClientHttpError(err: any): err is HttpErrorResponse {
+  return err instanceof HttpErrorResponse && err.error && (err.status - (err.status % 100)) === 400;
+}
+
+export function getCommonErrorMessage(err: HttpErrorResponse) {
+  if (err.status === 403) {
+    if (err.error && err.error.code === ServerErrorCode.AUTH_ROLE) {
+      return 'errors.role';
+    }
+  }
+  return '';
 }

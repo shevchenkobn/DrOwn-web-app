@@ -5,19 +5,19 @@
                       [style.visibility]="isMakingRequest ? 'visible' : 'hidden'"></mat-progress-bar>
     <mat-toolbar>
       <mat-toolbar-row>
-        <button mat-mini-fab color="primary"
+        <button mat-icon-button color="primary"
                 [disabled]="isMakingRequest"
                 (click)="refreshUser()">
           <mat-icon>refresh</mat-icon>
         </button>
         <span class="spacer-1"></span>
-        <button mat-raised-button color="primary"
+        <button mat-button color="warn"
                 [disabled]="isMakingRequest"
-                (click)="changePassword()">{{'profile.password.change-btn' | translate}}</button>
+                (click)="changePassword()">{{'password.change-btn' | translate}}</button>
         <span class="spacer-1"></span>
-        <button mat-raised-button color="primary"
+        <button mat-button color="warn"
                 [disabled]="isMakingRequest"
-                (click)="resetPassword()">{{'profile.password.reset-btn' | translate}}</button>
+                (click)="resetPassword()">{{'password.reset-btn' | translate}}</button>
       </mat-toolbar-row>
       <mat-toolbar-row>
         <mat-slide-toggle (click)="switchMode()"
@@ -27,10 +27,11 @@
     </mat-toolbar>
     <mat-list *ngIf="!editMode">
       <mat-list-item>
-        <h4 mat-line>{{user.email}}</h4>
         <p mat-line translate>user.email</p>
+        <h4 mat-line>{{user.email}}</h4>
       </mat-list-item>
       <mat-list-item>
+        <p mat-line translate>user.role</p>
         <mat-chip-list mat-line>
           <ng-container *ngFor="let roleName of rolesNames">
             <mat-chip *ngIf="userRoles[roleName]" color="primary" selected disableRipple>
@@ -38,19 +39,18 @@
             </mat-chip>
           </ng-container>
         </mat-chip-list>
-        <p mat-line translate>user.role</p>
       </mat-list-item>
       <mat-list-item>
-        <h4 mat-line>{{user.name}}</h4>
         <p mat-line translate>user.name</p>
+        <h4 mat-line>{{user.name}}</h4>
       </mat-list-item>
       <mat-list-item>
-        <h4 mat-line>{{user.longitude}}</h4>
         <p mat-line translate>user.longitude</p>
+        <h4 mat-line>{{user.longitude}}</h4>
       </mat-list-item>
       <mat-list-item>
-        <h4 mat-line>{{user.latitude}}</h4>
         <p mat-line translate>user.latitude</p>
+        <h4 mat-line>{{user.latitude}}</h4>
       </mat-list-item>
     </mat-list>
 
@@ -81,7 +81,7 @@
                type="text"
                required="required"
                formControlName="name"
-               name="email"/>
+               name="name"/>
         <mat-error *ngIf="controls.name.errors" translate>user-errors.name</mat-error>
       </mat-form-field>
       <mat-form-field class="fit-parent-width">

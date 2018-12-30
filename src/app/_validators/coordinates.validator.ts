@@ -1,6 +1,9 @@
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 
 export function longitudeValidator(control: AbstractControl) {
+  if (!control.value) {
+    return null;
+  }
   const num = Number.parseFloat(control.value);
   if (Number.isNaN(num)) {
     return {
@@ -16,6 +19,9 @@ export function longitudeValidator(control: AbstractControl) {
 }
 
 export function latitudeValidator(control: AbstractControl) {
+  if (!control.value) {
+    return null;
+  }
   const num = Number.parseFloat(control.value);
   if (Number.isNaN(num)) {
     return {

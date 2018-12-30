@@ -16,6 +16,10 @@ import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ProfileResolver } from './_auth/profile.resolver';
 import { UsersResolver } from './_resolvers/users.resolver';
+import { UserCreateComponent } from './user-create/user-create.component';
+import { UserRoles } from './_model/user.model';
+import { UserDetailComponent } from './user-detail/user-detail.component';
+import { UserResolver } from './_resolvers/user.resolver';
 
 export const dashboardPaths = {
   users: 'users',
@@ -27,32 +31,53 @@ export const routes: Routes = [
   {
     path: dashboardPaths.users,
     canActivate: [AuthGuard],
-    component: UsersComponent,
-    resolve: {
-      users: UsersResolver,
-    }
+    data: {
+      authRoles: UserRoles.ADMIN,
+    },
+    children: [
+      {
+        path: '',
+        component: UsersComponent,
+        resolve: {
+          users: UsersResolver,
+          profile: ProfileResolver,
+        },
+      },
+      {
+        path: 'create',
+        component: UserCreateComponent,
+      },
+      {
+        path: ':id',
+        component: UserDetailComponent,
+        resolve: {
+          user: UserResolver,
+        },
+      },
+    ],
   },
   {
     path: 'home',
     canActivate: [AuthGuard],
     children: [
-      // { path: 'drones' }
+      // { path: 'drones' } !authrolse
       {
         path: 'profile',
         component: ProfileComponent,
         resolve: {
-          profile: ProfileResolver
-        }
-      }
-    ]
+          profile: ProfileResolver,
+        },
+      },
+    ],
   },
 
   { path: 'home', canActivate: [AuthGuard], pathMatch: 'full', redirectTo: '/home/profile' },
+  { path: 'not-found', component: PageNotFoundComponent, pathMatch: 'full' },
   {
     path: '',
     canActivate: [AuthGuard, HomeGuard],
     pathMatch: 'full',
-    component: PageNotFoundComponent
+    component: PageNotFoundComponent,
   },
   { path: '**', component: PageNotFoundComponent },
 ];

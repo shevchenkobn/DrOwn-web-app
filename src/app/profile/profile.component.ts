@@ -11,14 +11,14 @@ import { Subscription } from 'rxjs';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog, MatDialogRef, MatSnackBar } from '@angular/material';
-import { ProfilePasswordChangeComponent } from '../profile-password-change/profile-password-change.component';
+import { PasswordChangeDialogComponent } from '../password-change-dialog/password-change-dialog.component';
 import { UsersService } from '../_services/users.service';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
-import { ProfileShowPasswordComponent } from '../profile-show-password/profile-show-password.component';
+import { ShowPasswordDialogComponent } from '../show-password-dialog/show-password-dialog.component';
 import { finalize } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { L10nService } from '../_services/l10n.service';
-import { ServerErrorCode } from '../_services/error-codes';
+import { isClientHttpError, ServerErrorCode } from '../_services/error-codes';
 import {
   coordsValidator,
   latitudeValidator,
@@ -39,7 +39,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   public l10n: L10nService;
   protected _snackBar: MatSnackBar;
   private onUserRefresh$!: Subscription;
-  public passwordDialog?: MatDialogRef<ProfilePasswordChangeComponent, boolean>;
+  public passwordDialog?: MatDialogRef<PasswordChangeDialogComponent, boolean>;
 
   public user!: Readonly<IUser>;
   public userRoles!: {[role: string]: boolean};
@@ -99,7 +99,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   changePassword() {
-    this._dialog.open(ProfilePasswordChangeComponent).afterClosed().subscribe((password: string) => {
+    this._dialog.open(PasswordChangeDialogComponent, {
+      autoFocus: false
+    }).afterClosed().subscribe((password: string) => {
       if (!password) {
         return;
       }
@@ -132,7 +134,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
       this._dialog.open(ConfirmDialogComponent, {
         data: {
           message: 'profile.update.email-q'
-        }
+        },
+        autoFocus: false
       }).afterClosed().subscribe(yes => {
         if (yes) {
           this.doUpdateProfile();
@@ -170,7 +173,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
           console.error(err);
           let msg: string;
           let replacer: ((str: string) => string) | null = null;
-          if (err instanceof HttpErrorResponse && (err.status - (err.status % 100)) === 400) {
+          if (isClientHttpError(err)) {
             switch (err.error.code as string) {
               case ServerErrorCode.USER_EMAIL_DUPLICATE:
                 msg = 'profile.errors.email';
@@ -182,17 +185,17 @@ export class ProfileComponent implements OnInit, OnDestroy {
                 break;
 
               default:
-                msg = 'profile.errors.unknown';
+                msg = 'errors.unknown';
             }
           } else {
             msg = 'errors.network';
           }
-          this.l10n.translate.get([msg, 'errors.ok']).subscribe(
+          this.l10n.translate.get([msg, 'dialog.ok']).subscribe(
             translations => {
               this._snackBar
                 .open(
                   replacer ? replacer(translations[msg]) : translations[msg],
-                  translations['errors.ok'],
+                  translations['dialog.ok'],
                 );
             }
           );
@@ -265,19 +268,27 @@ export class ProfileComponent implements OnInit, OnDestroy {
       data: {
         message: 'profile.password.reset-q'
       },
+      autoFocus: false
     }).afterClosed().subscribe((yes: boolean) => {
       if (yes) {
         this.isMakingRequest = true;
         this._users.updateUser({ userId: this.user.userId }, { password: '' }, true)
+          .pipe(
+            finalize(() => {
+              this.isMakingRequest = false;
+            })
+          )
           .subscribe(user => {
             const password = user.password;
             delete user.password;
             this.updateUser(user);
-            this.isMakingRequest = false;
-            this._dialog.open(ProfileShowPasswordComponent, {
+            this.isMakingRequest = true;
+            this._dialog.open(ShowPasswordDialogComponent, {
               data: {
-                password
-              }
+                password,
+                fromProfile: false
+              },
+              autoFocus: false
             });
           });
       }

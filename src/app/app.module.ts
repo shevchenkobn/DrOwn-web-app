@@ -54,10 +54,13 @@ import { ProgressSpinnerComponent } from './progress-spinner/progress-spinner.co
 import { AppOverlayModule } from './_modules/overlay/overlay.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProfileComponent } from './profile/profile.component';
-import { ProfilePasswordChangeComponent } from './profile-password-change/profile-password-change.component';
-import { ProfileShowPasswordComponent } from './profile-show-password/profile-show-password.component';
+import { PasswordChangeDialogComponent } from './password-change-dialog/password-change-dialog.component';
+import { ShowPasswordDialogComponent } from './show-password-dialog/show-password-dialog.component';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { UserComponent } from './user/user.component';
+import { InfoDialogComponent } from './info-dialog/info-dialog.component';
+import { UserCreateComponent } from './user-create/user-create.component';
+import { UserDetailComponent } from './user-detail/user-detail.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/l10n/', '.json');
@@ -72,10 +75,13 @@ export function HttpLoaderFactory(http: HttpClient) {
     LoginComponent,
     ProgressSpinnerComponent,
     ProfileComponent,
-    ProfilePasswordChangeComponent,
-    ProfileShowPasswordComponent,
+    PasswordChangeDialogComponent,
+    ShowPasswordDialogComponent,
     ConfirmDialogComponent,
     UserComponent,
+    InfoDialogComponent,
+    UserCreateComponent,
+    UserDetailComponent,
   ],
   imports: [
     BrowserModule,
@@ -147,9 +153,10 @@ export function HttpLoaderFactory(http: HttpClient) {
   ],
   bootstrap: [AppComponent],
   entryComponents: [
-    ProfileShowPasswordComponent,
-    ProfilePasswordChangeComponent,
-    ConfirmDialogComponent
+    ShowPasswordDialogComponent,
+    PasswordChangeDialogComponent,
+    ConfirmDialogComponent,
+    InfoDialogComponent,
   ]
 })
 export class AppModule { }

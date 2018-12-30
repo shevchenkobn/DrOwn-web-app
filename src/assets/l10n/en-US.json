@@ -16,7 +16,7 @@
   },
   "errors": {
     "network": "Networking error, try again",
-    "ok": "OK"
+    "unknown": "Unknown error, try again"
   },
   "login-page": {
     "title": "Login form",
@@ -49,33 +49,21 @@
     "password": {
       "change-q": "Are you sure you want to change your password?",
       "reset-q": "Are you sure you want to reset your password?",
-      "change-btn": "Change password",
-      "reset-btn": "Reset password",
       "show": {
         "title": "Your new password",
         "note": "Make sure you remembered it",
         "ok": "I got it!"
-      },
-      "change": {
-        "title": "Enter new password",
-        "password-label": "Password",
-        "no-password": "Password must be not shorter than 6 characters have at least a letter, an uppercase letter, a digit and a symbol",
-        "password-confirmation": "Password confirmation",
-        "no-password-confirmation": "Password confirmation cannot be empty",
-        "password-mismatch": "Passwords don't match",
-        "ok": "Submit",
-        "cancel": "Cancel"
       }
     },
     "errors": {
       "email": "Email {{email}} is taken by other user",
-      "not-found": "Your profile was deleted from your other session",
-      "unknown": "Unknown error, try again"
+      "not-found": "Your profile was deleted from your other session"
     }
   },
   "dialog": {
     "yes": "Yes",
-    "no": "No"
+    "no": "No",
+    "ok": "OK"
   },
   "user": {
     "email": "Email",
@@ -89,6 +77,7 @@
     "email": "Valid email is required",
     "password": "",
     "name": "Name is required",
+    "role": "At least one role must be set",
     "longitude": "Longitude must be a number between -180 and 180",
     "latitude": "Latitude must be a number between -90 and 90",
     "coords": "Both longitude and latitude must be present"
@@ -99,6 +88,42 @@
   },
   "users": {
     "title": "Users",
-    "create": "Create new"
+    "create": {
+      "btn": "Create new",
+      "gen-password": "Generate password",
+      "title": "New user",
+      "submit": "Create",
+      "done": "New user is created"
+    },
+    "details": {
+      "header": "Details"
+    },
+    "errors": {
+      "not-found": "The user is not found (was deleted previously)",
+      "delete-not-allowed": "The deletion is not allowed",
+      "email-dup": "There exists user with such email"
+    },
+    "deleted": "User was deleted",
+    "delete-q": "Delete user?"
+  },
+
+  "password": {
+    "change-btn": "Change password",
+    "reset-btn": "Reset password",
+    "change": {
+      "title": "Enter new password",
+      "password-label": "Password",
+      "no-password": "Password must be not shorter than 6 characters, have at least a letter, an uppercase letter, a digit and a symbol",
+      "password-confirmation": "Password confirmation",
+      "no-password-confirmation": "Password confirmation cannot be empty",
+      "password-mismatch": "Passwords don't match",
+      "ok": "Submit",
+      "cancel": "Cancel"
+    },
+    "show": {
+      "title": "User's new password",
+      "note": "Make sure you saved it",
+      "ok": "OK"
+    }
   }
 }

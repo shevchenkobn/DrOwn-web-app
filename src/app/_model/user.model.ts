@@ -25,25 +25,13 @@ export interface IPasswordUser extends IUser {
   password: Maybe<string>;
 }
 
-// export function userRoleToArray(user: IUser): UserRoles[] {
-//   const roles = [];
-//   for (let i = 1; i <= maxRole; i <<= 1) {
-//     if (user.role & i) {
-//       roles.push(i);
-//     }
-//   }
-//   return roles;
-// }
-//
-// export function composeUserRoleFromArray(roles: UserRoles[]): UserRoles {
-//   let userRole = 0;
-//   for (const role of roles) {
-//     userRole |= role;
-//   }
-//   return userRole;
-// }
-
-export function userRoleToObject(user: IUser) {
+export function userRoleToObject(user?: IUser) {
+  if (!user || !user.role) {
+    return userRoleNames.reduce((obj, roleName) => {
+      obj[roleName] = false;
+      return obj;
+    }, {} as Record<string, boolean>);
+  }
   const roles = {} as {[role: string]: boolean};
   for (let i = 1; i <= maxRole; i <<= 1) {
       roles[UserRoles[i]] = !!(user.role & i);

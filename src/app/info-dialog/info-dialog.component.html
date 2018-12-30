@@ -1,0 +1,4 @@
+<h1 mat-dialog-title [innerHTML]="data.message | translate:data.messageParams"></h1>
+<div mat-dialog-actions>
+  <button mat-button (click)="dialogRef.close()" color="accent">{{'dialog.ok' | translate}}</button>
+</div>

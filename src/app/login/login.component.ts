@@ -6,6 +6,7 @@ import { getFullPath } from '../_utils';
 import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material';
 import { finalize } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
+import { isClientHttpError } from '../_services/error-codes';
 
 @Component({
   selector: 'app-login',
@@ -54,17 +55,17 @@ export class LoginComponent implements OnInit {
         });
       },
       err => {
-        const msg = err instanceof HttpErrorResponse && (err.status - (err.status % 100)) === 400
+        const msg = isClientHttpError(err)
           ? 'login-page.error.client-msg'
           : 'errors.network';
         console.error(err);
-        this.l10n.translate.get([msg, 'errors.ok']).subscribe(
+        this.l10n.translate.get([msg, 'dialog.ok']).subscribe(
           translations => {
             if (this._lastSnackBar) {
               this._lastSnackBar.dismiss();
             }
             this._lastSnackBar = this._snackBar
-              .open(translations[msg], translations['errors.ok']);
+              .open(translations[msg], translations['dialog.ok']);
           }
         );
       }

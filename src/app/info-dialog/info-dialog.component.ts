@@ -3,17 +3,17 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { IDialogData } from '../@types';
 
 @Component({
-  selector: 'app-confirm-dialog',
-  templateUrl: './confirm-dialog.component.html',
-  styleUrls: ['./confirm-dialog.component.scss']
+  selector: 'app-info-dialog',
+  templateUrl: './info-dialog.component.html',
+  styleUrls: ['./info-dialog.component.scss']
 })
-export class ConfirmDialogComponent implements OnInit {
-  public dialogRef: MatDialogRef<ConfirmDialogComponent>;
+export class InfoDialogComponent implements OnInit {
+  public dialogRef: MatDialogRef<InfoDialogComponent>;
   public data: IDialogData;
 
   constructor(
-    dialogRef: MatDialogRef<ConfirmDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) data: IDialogData,
+    dialogRef: MatDialogRef<InfoDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) data: IDialogData
   ) {
     this.dialogRef = dialogRef;
     this.dialogRef.disableClose = true;

@@ -2,23 +2,25 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material';
 import { Maybe } from '../@types';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { passwordPattern } from '../_validators/password.validator';
 
 @Component({
   selector: 'app-profile-password-change',
-  templateUrl: './profile-password-change.component.html',
-  styleUrls: ['./profile-password-change.component.scss']
+  templateUrl: './password-change-dialog.component.html',
+  styleUrls: ['./password-change-dialog.component.scss']
 })
-export class ProfilePasswordChangeComponent implements OnInit {
-  public dialogRef: MatDialogRef<ProfilePasswordChangeComponent>;
+export class PasswordChangeDialogComponent implements OnInit {
+  public dialogRef: MatDialogRef<PasswordChangeDialogComponent>;
   public data: Maybe<any>;
 
   protected _dialog: MatDialog;
 
   public password = '';
   public passwordConfirmation = '';
+  public pattern = passwordPattern.toString().slice(1, -1);
 
   constructor(
-    dialogRef: MatDialogRef<ProfilePasswordChangeComponent>,
+    dialogRef: MatDialogRef<PasswordChangeDialogComponent>,
     @Inject(MAT_DIALOG_DATA) data: Maybe<any>,
     dialog: MatDialog
   ) {
@@ -34,7 +36,7 @@ export class ProfilePasswordChangeComponent implements OnInit {
   confirm() {
     this._dialog.open(ConfirmDialogComponent, {
       data: {
-        message: 'profile.password.change-q'
+        message: 'password.change-q'
       }
     }).afterClosed().subscribe(yes => {
       if (yes) {
