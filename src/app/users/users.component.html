@@ -1,3 +1,27 @@
-<p>
-  users works!
-</p>
+<mat-card>
+  <mat-card-title translate>users.title</mat-card-title>
+  <mat-card-content>
+    <mat-toolbar>
+      <a mat-raised-button
+         [routerLink]="['create']"
+         color="primary">
+        {{ 'users.create' | translate }}
+      </a>
+      <span class="spacer-1"></span>
+    </mat-toolbar>
+    <mat-nav-list>
+      <a *ngFor="let user of users; let i = index"
+         [routerLink]="[user.userId]">
+        <h4 mat-line>{{user.name}}</h4>
+        <p mat-line>{{user.email}}</p>
+        <mat-chip-list mat-line>
+          <ng-container *ngFor="let roleName of roleNames">
+            <mat-chip *ngIf="userRoles[i][roleName]" color="primary" selected disableRipple>
+              {{'user-roles.' + roleName | translate}}
+            </mat-chip>
+          </ng-container>
+        </mat-chip-list>
+      </a>
+    </mat-nav-list>
+  </mat-card-content>
+</mat-card>

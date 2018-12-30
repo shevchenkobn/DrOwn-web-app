@@ -22,6 +22,10 @@ export class UsersService {
     this._http = http;
   }
 
+  getUsers() {
+    return this._http.get<IUser[]>(UsersService.USERS_BASE);
+  }
+
   updateUser(userId: IUserId, updateUser: Partial<IPasswordUser>, includePassword = false) {
     const params = {
       ...UsersService.PARAMS

@@ -15,16 +15,23 @@ import { UsersComponent } from './users/users.component';
 import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ProfileResolver } from './_auth/profile.resolver';
+import { UsersResolver } from './_resolvers/users.resolver';
 
 export const dashboardPaths = {
   users: 'users',
   homeDrones: 'home/drones', // NOTE: if changed, routes below also must be changed
-  drones: 'drones',
 };
 
 export const routes: Routes = [
   { path: 'login', canActivate: [LoginGuard], component: LoginComponent, pathMatch: 'full' },
-  { path: dashboardPaths.users, canActivate: [AuthGuard], component: UsersComponent },
+  {
+    path: dashboardPaths.users,
+    canActivate: [AuthGuard],
+    component: UsersComponent,
+    resolve: {
+      users: UsersResolver,
+    }
+  },
   {
     path: 'home',
     canActivate: [AuthGuard],

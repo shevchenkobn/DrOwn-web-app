@@ -57,6 +57,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { ProfilePasswordChangeComponent } from './profile-password-change/profile-password-change.component';
 import { ProfileShowPasswordComponent } from './profile-show-password/profile-show-password.component';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import { UserComponent } from './user/user.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/l10n/', '.json');
@@ -74,6 +75,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ProfilePasswordChangeComponent,
     ProfileShowPasswordComponent,
     ConfirmDialogComponent,
+    UserComponent,
   ],
   imports: [
     BrowserModule,

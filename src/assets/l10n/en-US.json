@@ -96,5 +96,9 @@
   "user-roles": {
     "OWNER": "Drone owner",
     "ADMIN": "Admin"
+  },
+  "users": {
+    "title": "Users",
+    "create": "Create new"
   }
 }
