@@ -1,0 +1,105 @@
+<mat-card>
+  <mat-card-title>{{title | translate}}</mat-card-title>
+  <mat-card-content>
+    <mat-progress-bar mode="indeterminate"
+                      [style.visibility]="showProgressBar ? 'visible' : 'hidden'"></mat-progress-bar>
+    <form [formGroup]="form">
+      <mat-form-field class="fit-parent-width">
+        <mat-label translate>user.email</mat-label>
+        <input matInput
+               type="email"
+               required="required"
+               formControlName="email"
+               name="email"/>
+        <mat-error *ngIf="controls.email.errors" translate>user-errors.email</mat-error>
+      </mat-form-field>
+      <ng-container *ngIf="showRoles">
+        <p translate>user.role</p>
+        <mat-list>
+          <mat-list-item *ngFor="let roleName of roleNames">
+            <mat-checkbox [checked]="userRoles[roleName]"
+                          (change)="toggleRole(roleName)">
+              {{'user-roles.' + roleName | translate}}
+            </mat-checkbox>
+          </mat-list-item>
+        </mat-list>
+        <mat-error *ngIf="form.errors && form.errors.userRole" translate>
+          user-errors.role
+        </mat-error>
+      </ng-container>
+      <mat-form-field class="fit-parent-width">
+        <mat-label translate>user.name</mat-label>
+        <input matInput
+               type="text"
+               required="required"
+               formControlName="name"
+               name="name"/>
+        <mat-error *ngIf="controls.name.errors" translate>user-errors.name</mat-error>
+      </mat-form-field>
+
+
+      <mat-checkbox *ngIf="allowGeneratePassword"
+                    [checked]="generatedPassword"
+                    (change)="switchPasswords()">
+        {{'users.create.gen-password' | translate }}
+      </mat-checkbox>
+      <ng-container *ngIf="!generatedPassword">
+        <mat-form-field class="fit-parent-width">
+          <mat-label translate>password.change.password-label</mat-label>
+          <input matInput
+                 [errorStateMatcher]="errorStateMatcher"
+                 type="password"
+                 required="required"
+                 formControlName="password"
+                 name="password"/>
+          <mat-error *ngIf="controls.password.invalid" translate>password.change.no-password</mat-error>
+        </mat-form-field>
+        <mat-form-field class="fit-parent-width">
+          <mat-label translate>password.change.password-confirmation</mat-label>
+          <input matInput
+                 [errorStateMatcher]="errorStateMatcher"
+                 type="password"
+                 required="required"
+                 formControlName="passwordConfirmation"
+                 name="passwordConfirmation"/>
+          <mat-error *ngIf="controls.password.invalid" translate>password.change.no-password-confirmation</mat-error>
+          <mat-error *ngIf="form.errors && form.errors.passwordMatch" translate>password.change.password-mismatch
+          </mat-error>
+        </mat-form-field>
+      </ng-container>
+
+
+      <mat-form-field class="fit-parent-width">
+        <mat-label translate>user.longitude</mat-label>
+        <input matInput
+               type="number"
+               formControlName="longitude"
+               name="longitude"
+               [errorStateMatcher]="errorStateMatcher"/>
+        <mat-error *ngIf="controls.longitude.errors" translate>user-errors.longitude</mat-error>
+        <mat-error *ngIf="form.errors && form.errors.notCoords" translate>
+          user-errors.coords
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="fit-parent-width">
+        <mat-label translate>user.latitude</mat-label>
+        <input matInput
+               type="number"
+               formControlName="latitude"
+               name="latitude"
+               [errorStateMatcher]="errorStateMatcher"/>
+        <mat-error *ngIf="controls.latitude.errors" translate>user-errors.latitude</mat-error>
+        <mat-error *ngIf="form.errors && form.errors.notCoords" translate>
+          user-errors.coords
+        </mat-error>
+      </mat-form-field>
+    </form>
+    <mat-toolbar>
+      <button mat-raised-button color="primary"
+              [disabled]="showProgressBar || form.invalid"
+              (click)="submitUser()">
+        {{submitButtonValue | translate}}
+      </button>
+    </mat-toolbar>
+  </mat-card-content>
+</mat-card>

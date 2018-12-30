@@ -7,6 +7,7 @@
     "drones": "Drones",
     "my-drones": "My Drones",
     "my-transactions": "My Transactions",
+    "register": "Sign up",
     "login": "Log in",
     "logout": "Log out"
   },
@@ -125,5 +126,11 @@
       "note": "Make sure you saved it",
       "ok": "OK"
     }
+  },
+  "register": {
+    "title": "New User Registration",
+    "done": "Registration is successful!",
+    "login": "Please, enter your credentials to log in",
+    "submit": "Register"
   }
 }

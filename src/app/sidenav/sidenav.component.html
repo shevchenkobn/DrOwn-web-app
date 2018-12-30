@@ -6,6 +6,12 @@
     <span>{{ 'nav.login' | translate }}</span>
   </a>
   <a mat-list-item
+     *ngIf="!isLoggedIn"
+     [routerLink]="['/register']">
+    <mat-icon mat-list-icon>person_add</mat-icon>
+    <span>{{ 'nav.register' | translate }}</span>
+  </a>
+  <a mat-list-item
      *ngIf="isLoggedIn"
      [routerLink]="['/home/profile']">
     <mat-icon mat-list-icon>account_circle</mat-icon>

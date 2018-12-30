@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from '../_auth/auth.service';
 import { Router } from '@angular/router';
 import { L10nService } from '../_services/l10n.service';
@@ -13,7 +13,7 @@ import { isClientHttpError } from '../_services/error-codes';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   protected _auth: AuthService;
   protected _router: Router;
   protected _snackBar: MatSnackBar;
@@ -74,11 +74,6 @@ export class LoginComponent implements OnInit {
     this.isSendingRequest = true;
   }
 
-  ngOnInit() {
-    this.updateRedirectUrl();
-    this.setRedirectMessage();
-  }
-
   protected updateRedirectUrl() {
     this._redirectUrl = this._auth.redirectUrl ? getFullPath(this._auth.redirectUrl, false) : '/';
   }
@@ -98,5 +93,14 @@ export class LoginComponent implements OnInit {
     this.l10n.translate.get('login-page.home').subscribe(translation => {
       this.redirectWrap.redirect = translation;
     });
+  }
+
+  ngOnInit() {
+    this.updateRedirectUrl();
+    this.setRedirectMessage();
+  }
+
+  ngOnDestroy() {
+    this._snackBar.dismiss();
   }
 }

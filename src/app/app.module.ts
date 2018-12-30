@@ -61,6 +61,8 @@ import { UserComponent } from './user/user.component';
 import { InfoDialogComponent } from './info-dialog/info-dialog.component';
 import { UserCreateComponent } from './user-create/user-create.component';
 import { UserDetailComponent } from './user-detail/user-detail.component';
+import { UserCreateCoreComponent } from './user-create-core/user-create-core.component';
+import { RegisterComponent } from './register/register.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/l10n/', '.json');
@@ -82,6 +84,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     InfoDialogComponent,
     UserCreateComponent,
     UserDetailComponent,
+    UserCreateCoreComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,

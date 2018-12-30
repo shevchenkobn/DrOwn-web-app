@@ -1,0 +1,7 @@
+<app-user-create-core title="register.title"
+                      submitButtonValue="register.submit"
+                      [showProgressBar]="isMakingRequest"
+                      (userSubmit)="register($event)"
+                      [allowGeneratePassword]="false"
+                      [showRoles]="false">
+</app-user-create-core>

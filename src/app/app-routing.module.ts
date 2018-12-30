@@ -20,6 +20,7 @@ import { UserCreateComponent } from './user-create/user-create.component';
 import { UserRoles } from './_model/user.model';
 import { UserDetailComponent } from './user-detail/user-detail.component';
 import { UserResolver } from './_resolvers/user.resolver';
+import { RegisterComponent } from './register/register.component';
 
 export const dashboardPaths = {
   users: 'users',
@@ -28,6 +29,7 @@ export const dashboardPaths = {
 
 export const routes: Routes = [
   { path: 'login', canActivate: [LoginGuard], component: LoginComponent, pathMatch: 'full' },
+  { path: 'register', canActivate: [LoginGuard], component: RegisterComponent, pathMatch: 'full' },
   {
     path: dashboardPaths.users,
     canActivate: [AuthGuard],

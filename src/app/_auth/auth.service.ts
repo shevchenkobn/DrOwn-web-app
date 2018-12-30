@@ -4,8 +4,9 @@ import { HttpUrlHelper } from '../_http/http-url.helper';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { finalize, map, shareReplay, tap } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
-import { IUser, UserRoles } from '../_model/user.model';
+import { IPasswordUser, IUser, UserRoles } from '../_model/user.model';
 import { ActivatedRouteSnapshot } from '@angular/router';
+import { UsersService } from '../_services/users.service';
 
 interface Tokens {
   accessToken: string;
@@ -188,5 +189,19 @@ export class AuthService {
     }
     this._user = user;
     this._onUserRefresh.next(user);
+  }
+
+  register(user: IPasswordUser, returnUser: true): Observable<IUser>;
+  register(user: IPasswordUser, returnUser?: false): Observable<null>;
+  public register(user: IPasswordUser, returnUser = false) {
+    if (!user.password) {
+      throw new Error('Password is required for registration');
+    }
+    const params: Record<string, string | string[]> = returnUser ? {
+      ...UsersService.PARAMS,
+    } : {};
+    return this._http.post<IUser | null>(AuthService.AUTH_REGISTER_PATH, user, {
+      params
+    });
   }
 }
