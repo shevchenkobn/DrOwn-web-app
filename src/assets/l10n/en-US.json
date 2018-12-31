@@ -37,6 +37,9 @@
   "profile": {
     "title": "Profile",
     "refresh": "Refresh profile",
+    "delete-btn": "Delete account",
+    "delete-q": "Are you sure you want permanently delete your account?",
+    "delete-q2": "Delete your account?",
     "edit-mode": "Edit mode",
     "update": {
       "btn": "Update profile"

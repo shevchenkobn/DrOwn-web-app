@@ -22,6 +22,12 @@
                   (click)="resetPassword()">
             {{'password.reset-btn' | translate}}
           </button>
+          <span class="spacer-1"></span>
+          <button mat-raised-button color="warn"
+                  [disabled]="isMakingRequest"
+                  (click)="deleteProfile()">
+            {{'profile.delete-btn' | translate}}
+          </button>
         </div>
       </mat-toolbar-row>
       <mat-toolbar-row>

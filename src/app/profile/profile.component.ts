@@ -9,7 +9,7 @@ import {
 } from '../_model/user.model';
 import { Subscription } from 'rxjs';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog, MatDialogRef, MatSnackBar } from '@angular/material';
 import { PasswordChangeDialogComponent } from '../password-change-dialog/password-change-dialog.component';
 import { UsersService } from '../_services/users.service';
@@ -36,6 +36,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   protected _fb: FormBuilder;
   protected _route: ActivatedRoute;
   protected _dialog: MatDialog;
+  protected _router: Router;
   public l10n: L10nService;
   protected _snackBar: MatSnackBar;
   private onUserRefresh$!: Subscription;
@@ -63,6 +64,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     dialog: MatDialog,
     l10n: L10nService,
     snackBar: MatSnackBar,
+    router: Router,
   ) {
     this._auth = authService;
     this._users = users;
@@ -71,6 +73,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this._dialog = dialog;
     this.l10n = l10n;
     this._snackBar = snackBar;
+    this._router = router;
   }
 
   isAdmin() {
@@ -271,6 +274,37 @@ export class ProfileComponent implements OnInit, OnDestroy {
             });
           });
       }
+    });
+  }
+
+  public deleteProfile() {
+    this._dialog.open(ConfirmDialogComponent, {
+      data: {
+        message: 'profile.delete-q'
+      },
+      autoFocus: false
+    }).afterClosed().subscribe(yes => {
+      if (!yes) {
+        return;
+      }
+      this._dialog.open(ConfirmDialogComponent, {
+        data: {
+          message: 'profile.delete-q2'
+        },
+        autoFocus: false
+      }).afterClosed().subscribe(secondYes => {
+        if (!secondYes) {
+          return;
+        }
+        this._users.deleteUser({ userId: this.user.userId}).subscribe(
+          () => {
+            this._auth.logout();
+            this._router.navigateByUrl('/login').catch(err => {
+              console.error('From profile delete', err);
+            });
+          }
+        );
+      });
     });
   }
 
