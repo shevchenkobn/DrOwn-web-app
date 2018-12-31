@@ -25,7 +25,7 @@ export interface IPasswordUser extends IUser {
   password: Maybe<string>;
 }
 
-export function userRoleToObject(user?: IUser) {
+export function userRoleToObject(user?: Readonly<IUser>) {
   if (!user || !user.role) {
     return userRoleNames.reduce((obj, roleName) => {
       obj[roleName] = false;
@@ -39,9 +39,16 @@ export function userRoleToObject(user?: IUser) {
   return roles;
 }
 
+export function updateRoleObjectForUser(obj: Record<string, boolean>, user: Readonly<IUser>) {
+  for (let i = minRole; i <= maxRole; i <<= 1) {
+    obj[UserRoles[i]] = !!(user.role & i);
+  }
+  return obj;
+}
+
 export function userRoleFromObject(obj: {[role: string]: boolean}) {
   let role = 0 as UserRoles;
-  for (let i = 1; i <= maxRole; i <<= 1) {
+  for (let i = minRole; i <= maxRole; i <<= 1) {
     if (obj[UserRoles[i]]) {
       role |= i;
     }

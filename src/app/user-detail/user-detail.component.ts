@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { IUser } from '../_model/user.model';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-user-detail',
@@ -6,10 +8,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./user-detail.component.scss']
 })
 export class UserDetailComponent implements OnInit {
+  protected _route: ActivatedRoute;
 
-  constructor() { }
+  public user!: Readonly<IUser>;
 
-  ngOnInit() {
+  constructor(route: ActivatedRoute) {
+    this._route = route;
   }
 
+  ngOnInit() {
+    this.user = this._route.snapshot.data['user'];
+  }
 }

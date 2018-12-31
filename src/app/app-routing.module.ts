@@ -18,9 +18,11 @@ import { ProfileResolver } from './_auth/profile.resolver';
 import { UsersResolver } from './_resolvers/users.resolver';
 import { UserCreateComponent } from './user-create/user-create.component';
 import { UserRoles } from './_model/user.model';
-import { UserDetailComponent } from './user-detail/user-detail.component';
+import { UserDetailCoreComponent } from './user-detail-core/user-detail-core.component';
 import { UserResolver } from './_resolvers/user.resolver';
 import { RegisterComponent } from './register/register.component';
+import { UserDetailComponent } from './user-detail/user-detail.component';
+import { UserUpdateComponent } from './user-update/user-update.component';
 
 export const dashboardPaths = {
   users: 'users',
@@ -51,10 +53,22 @@ export const routes: Routes = [
       },
       {
         path: ':id',
-        component: UserDetailComponent,
-        resolve: {
-          user: UserResolver,
-        },
+        children: [
+          {
+            path: '',
+            component: UserDetailComponent,
+            resolve: {
+              user: UserResolver,
+            },
+          },
+          {
+            path: 'edit',
+            component: UserUpdateComponent,
+            resolve: {
+              user: UserResolver
+            }
+          }
+        ]
       },
     ],
   },
@@ -62,7 +76,6 @@ export const routes: Routes = [
     path: 'home',
     canActivate: [AuthGuard],
     children: [
-      // { path: 'drones' } !authrolse
       {
         path: 'profile',
         component: ProfileComponent,
@@ -70,10 +83,12 @@ export const routes: Routes = [
           profile: ProfileResolver,
         },
       },
+      // { path: 'drones' } !authrolse
+      {
+        path: '', pathMatch: 'full', redirectTo: 'profile'
+      }
     ],
   },
-
-  { path: 'home', canActivate: [AuthGuard], pathMatch: 'full', redirectTo: '/home/profile' },
   { path: 'not-found', component: PageNotFoundComponent, pathMatch: 'full' },
   {
     path: '',

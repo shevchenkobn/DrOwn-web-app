@@ -13,7 +13,7 @@ import { ServerErrorCode } from '../_services/error-codes';
 import { Router } from '@angular/router';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthInterceptor implements HttpInterceptor {
   private _auth: AuthService;
@@ -25,8 +25,12 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 
   public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (AuthService.NO_AUTH_PATHS.some(([path, methods]) => (
-      req.url.startsWith(path) && (!methods || methods.includes(req.method))
+    if (AuthService.NO_AUTH_PATHS.some(([path, methods, matchFull]) => (
+      (
+        matchFull && req.url === path || !matchFull && req.url.startsWith(path)
+      ) && (
+        !methods || methods.includes(req.method)
+      )
     ))) {
       return next.handle(req);
     }
@@ -56,7 +60,7 @@ export class AuthInterceptor implements HttpInterceptor {
                 this.handleRefreshExpire();
               }
               return throwError(refreshErr);
-            })
+            }),
           );
         }
         return throwError(err);
@@ -68,14 +72,14 @@ export class AuthInterceptor implements HttpInterceptor {
     return req.clone({
       setHeaders: {
         'Authorization': `Bearer ${this._auth.jwt.tokenGetter()}`,
-      }
+      },
     });
   }
 
   private handleRefreshExpire() {
     this._auth.logout();
     this._router.navigateByUrl('/login').catch(err => {
-      console.error('From AuthInterceptor redirect to login')
+      console.error('From AuthInterceptor redirect to login');
     });
   }
 }

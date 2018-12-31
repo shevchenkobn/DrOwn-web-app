@@ -32,7 +32,7 @@ export class UserResolver implements Resolve<IUser> {
             }
           })
             .catch(navError => {
-              console.error('From user resolve navigate', navError);
+              console.error('From localUser resolve navigate', navError);
             });
           return of(null as any);
         }

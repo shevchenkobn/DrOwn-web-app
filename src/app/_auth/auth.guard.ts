@@ -11,7 +11,7 @@ import { IUser, UserRoles } from '../_model/user.model';
 import { map } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthGuard implements CanActivate, CanActivateChild {
   protected _auth: AuthService;
@@ -24,14 +24,14 @@ export class AuthGuard implements CanActivate, CanActivateChild {
 
   public canActivate(
     next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
+    state: RouterStateSnapshot,
   ): Observable<boolean> | Promise<boolean> | boolean {
     return this.checkAuthAndRole(next);
   }
 
   public canActivateChild(
     childRoute: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
+    state: RouterStateSnapshot,
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     return this.checkAuthAndRole(childRoute);
   }

@@ -60,9 +60,12 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
 import { UserComponent } from './user/user.component';
 import { InfoDialogComponent } from './info-dialog/info-dialog.component';
 import { UserCreateComponent } from './user-create/user-create.component';
-import { UserDetailComponent } from './user-detail/user-detail.component';
+import { UserDetailCoreComponent } from './user-detail-core/user-detail-core.component';
 import { UserCreateCoreComponent } from './user-create-core/user-create-core.component';
 import { RegisterComponent } from './register/register.component';
+import { UserUpdateCoreComponent } from './user-update-core/user-update-core.component';
+import { UserDetailComponent } from './user-detail/user-detail.component';
+import { UserUpdateComponent } from './user-update/user-update.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/l10n/', '.json');
@@ -83,9 +86,12 @@ export function HttpLoaderFactory(http: HttpClient) {
     UserComponent,
     InfoDialogComponent,
     UserCreateComponent,
-    UserDetailComponent,
+    UserDetailCoreComponent,
     UserCreateCoreComponent,
     RegisterComponent,
+    UserUpdateCoreComponent,
+    UserDetailComponent,
+    UserUpdateComponent,
   ],
   imports: [
     BrowserModule,

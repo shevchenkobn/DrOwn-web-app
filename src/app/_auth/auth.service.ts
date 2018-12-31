@@ -25,21 +25,11 @@ export class AuthService {
   public static readonly AUTH_LOGIN_PATH = AuthService.AUTH_BASE_PATH;
   public static readonly AUTH_REFRESH_PATH = AuthService.AUTH_BASE_PATH + '/refresh';
   public static readonly AUTH_REGISTER_PATH = AuthService.AUTH_BASE_PATH + '/register';
-  public static readonly PROFILE_PATH = '/profile';
-  public static readonly DRONES_PATH = '/drones';
-  public static readonly DRONE_PRICES_PATH = '/drone-prices';
-  // FIXME: check if droons should be added
-  // public static readonly NO_AUTH_PATHS = [
-  //   AuthService.AUTH_LOGIN_PATH,
-  //   AuthService.AUTH_REFRESH_PATH,
-  //   AuthService.AUTH_REGISTER_PATH,
-  //   AuthService.DRONE_PRICES_PATH,
-  //   AuthService.DRONES_PATH,
-  // ];
-  public static readonly NO_AUTH_PATHS: ReadonlyArray<[string, ReadonlyArray<string>?]> = [
-    [HttpUrlHelper.getUrl(AuthService.DRONES_PATH), ['GET']],
-    [HttpUrlHelper.getUrl(AuthService.DRONE_PRICES_PATH), ['GET']],
-    [HttpUrlHelper.getUrl(AuthService.AUTH_BASE_PATH)],
+  public static readonly PROFILE_PATH = AuthService.AUTH_BASE_PATH + '/profile';
+  public static readonly NO_AUTH_PATHS: ReadonlyArray<[string, ReadonlyArray<string>?, boolean?]> = [
+    [HttpUrlHelper.getUrl(AuthService.AUTH_REFRESH_PATH), undefined, true],
+    [HttpUrlHelper.getUrl(AuthService.AUTH_REGISTER_PATH), undefined, true],
+    [HttpUrlHelper.getUrl(AuthService.AUTH_LOGIN_PATH), undefined, true],
   ];
 
   public static readonly LOGIN_ROUTE = '/login';
@@ -185,7 +175,7 @@ export class AuthService {
 
   public setUser(user: IUser) {
     if (!this.isLoggedIn()) {
-      throw new Error('Not logged in, cannot set user');
+      throw new Error('Not logged in, cannot set localUser');
     }
     this._user = user;
     this._onUserRefresh.next(user);

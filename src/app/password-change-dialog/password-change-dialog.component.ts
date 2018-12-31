@@ -1,8 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material';
+import { ErrorStateMatcher, MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material';
 import { Maybe } from '../@types';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { passwordPattern } from '../_validators/password.validator';
+import { FormInvalidMatcher } from '../_validators/error-state-matchers';
 
 @Component({
   selector: 'app-profile-password-change',
@@ -18,6 +19,7 @@ export class PasswordChangeDialogComponent implements OnInit {
   public password = '';
   public passwordConfirmation = '';
   public pattern = passwordPattern.toString().slice(1, -1);
+  public errorStateMatcher!: ErrorStateMatcher;
 
   constructor(
     dialogRef: MatDialogRef<PasswordChangeDialogComponent>,
@@ -31,6 +33,7 @@ export class PasswordChangeDialogComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.errorStateMatcher = new FormInvalidMatcher(true);
   }
 
   confirm() {

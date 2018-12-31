@@ -10,14 +10,19 @@
                 (click)="refreshUser()">
           <mat-icon>refresh</mat-icon>
         </button>
-        <span class="spacer-1"></span>
-        <button mat-button color="warn"
-                [disabled]="isMakingRequest"
-                (click)="changePassword()">{{'password.change-btn' | translate}}</button>
-        <span class="spacer-1"></span>
-        <button mat-button color="warn"
-                [disabled]="isMakingRequest"
-                (click)="resetPassword()">{{'password.reset-btn' | translate}}</button>
+        <div class="align-right">
+          <button mat-button color="warn"
+                  [disabled]="isMakingRequest"
+                  (click)="changePassword()">
+            {{'password.change-btn' | translate}}
+          </button>
+          <span class="spacer-1"></span>
+          <button mat-button color="warn"
+                  [disabled]="isMakingRequest"
+                  (click)="resetPassword()">
+            {{'password.reset-btn' | translate}}
+          </button>
+        </div>
       </mat-toolbar-row>
       <mat-toolbar-row>
         <mat-slide-toggle (click)="switchMode()"

@@ -1,3 +1,14 @@
-<p>
-  user-detail works!
-</p>
+<mat-card>
+  <mat-card-title translate>users.details.title</mat-card-title>
+  <mat-card-content class="mat-elevation-z4">
+    <mat-toolbar>
+      <div class="align-right">
+        <a mat-icon-button color="accent"
+           routerLink="edit">
+          <mat-icon>edit</mat-icon>
+        </a>
+      </div>
+    </mat-toolbar>
+    <app-user-detail-core [user]="user"></app-user-detail-core>
+  </mat-card-content>
+</mat-card>

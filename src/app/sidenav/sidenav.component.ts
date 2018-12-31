@@ -35,7 +35,7 @@ export class SidenavComponent implements OnInit, OnDestroy {
       this._auth.refreshUser().subscribe(
         user => this.user = user,
         error1 => {
-          console.error('From sidenav refresh user ', error1);
+          console.error('From sidenav refresh localUser ', error1);
         },
       );
     }

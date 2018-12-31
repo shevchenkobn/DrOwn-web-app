@@ -16,7 +16,6 @@ import { UsersService } from '../_services/users.service';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { ShowPasswordDialogComponent } from '../show-password-dialog/show-password-dialog.component';
 import { finalize } from 'rxjs/operators';
-import { HttpErrorResponse } from '@angular/common/http';
 import { L10nService } from '../_services/l10n.service';
 import { isClientHttpError, ServerErrorCode } from '../_services/error-codes';
 import {
@@ -39,7 +38,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
   public l10n: L10nService;
   protected _snackBar: MatSnackBar;
   private onUserRefresh$!: Subscription;
-  public passwordDialog?: MatDialogRef<PasswordChangeDialogComponent, boolean>;
 
   public user!: Readonly<IUser>;
   public userRoles!: {[role: string]: boolean};
@@ -105,7 +103,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
       if (!password) {
         return;
       }
-      this.passwordDialog = undefined;
       this.isMakingRequest = true;
       this._users.updateUser({ userId: this.user.userId }, { password })
         .pipe(

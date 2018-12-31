@@ -1,0 +1,13 @@
+<mat-card>
+  <mat-card-title translate>users.edit.title</mat-card-title>
+  <mat-card-content>
+    <mat-toolbar>
+
+    </mat-toolbar>
+    <app-user-update-core (userSubmit)="updateUser($event)"
+                          submitButtonValue="users.edit.submit"
+                          [disable]="isMakingRequest"
+                          [user]="user">
+    </app-user-update-core>
+  </mat-card-content>
+</mat-card>

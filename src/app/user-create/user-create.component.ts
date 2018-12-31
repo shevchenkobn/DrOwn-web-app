@@ -90,7 +90,7 @@ export class UserCreateComponent implements OnInit, OnDestroy {
     }).afterClosed().subscribe(() => {
       this._router.navigate(['../'], { relativeTo: this._route }).catch(
         err => {
-          console.error('From user create -> navigate to users', err);
+          console.error('From localUser create -> navigate to users', err);
         },
       );
     });

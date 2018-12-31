@@ -1,0 +1,56 @@
+<form [formGroup]="form">
+  <mat-form-field class="fit-parent-width">
+    <mat-label translate>user.email</mat-label>
+    <input matInput
+           type="email"
+           required="required"
+           formControlName="email"
+           name="email"/>
+    <mat-error *ngIf="controls.email.errors" translate>user-errors.email</mat-error>
+  </mat-form-field>
+  <div *ngIf="isAdmin()">
+    <p translate>user.role</p>
+    <mat-list>
+      <mat-list-item *ngFor="let roleName of rolesNames">
+        <mat-checkbox [checked]="userRoles[roleName]"
+                      (change)="toggleRole(roleName)">
+          {{'user-roles.' + roleName | translate}}
+        </mat-checkbox>
+      </mat-list-item>
+    </mat-list>
+  </div>
+  <mat-form-field class="fit-parent-width">
+    <mat-label translate>user.name</mat-label>
+    <input matInput
+           type="text"
+           required="required"
+           formControlName="name"
+           name="name"/>
+    <mat-error *ngIf="controls.name.errors" translate>user-errors.name</mat-error>
+  </mat-form-field>
+  <mat-form-field class="fit-parent-width">
+    <mat-label translate>user.longitude</mat-label>
+    <input matInput
+           type="number"
+           formControlName="longitude"
+           name="longitude"/>
+    <mat-error *ngIf="controls.longitude.errors" translate>user-errors.longitude</mat-error>
+    <mat-error *ngIf="form.errors && form.errors.notCoords" translate>user-errors.coords
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field class="fit-parent-width">
+    <mat-label translate>user.latitude</mat-label>
+    <input matInput
+           type="number"
+           formControlName="latitude"
+           name="latitude"/>
+    <mat-error *ngIf="controls.latitude.errors" translate>user-errors.latitude</mat-error>
+    <mat-error *ngIf="form.errors && form.errors.notCoords" translate>user-errors.coords
+    </mat-error>
+  </mat-form-field>
+  <mat-toolbar>
+    <button mat-raised-button color="primary"
+            [disabled]="!form.valid || disable"
+            (click)="updateUser()">{{'profile.update.btn' | translate}}</button>
+  </mat-toolbar>
+</form>

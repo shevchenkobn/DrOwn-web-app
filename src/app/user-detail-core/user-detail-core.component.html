@@ -1,0 +1,28 @@
+<mat-list>
+  <mat-list-item>
+    <h4 mat-line>{{localUser.email}}</h4>
+    <p mat-line translate>user.email</p>
+  </mat-list-item>
+  <mat-list-item>
+    <p mat-line translate>user.role</p>
+    <mat-chip-list mat-line>
+      <ng-container *ngFor="let roleName of roleNames">
+        <mat-chip *ngIf="userRoles[roleName]" color="primary" selected disableRipple>
+          {{'user-roles.' + roleName | translate}}
+        </mat-chip>
+      </ng-container>
+    </mat-chip-list>
+  </mat-list-item>
+  <mat-list-item>
+    <h4 mat-line>{{localUser.name}}</h4>
+    <p mat-line translate>user.name</p>
+  </mat-list-item>
+  <mat-list-item>
+    <h4 mat-line>{{localUser.longitude}}</h4>
+    <p mat-line translate>user.longitude</p>
+  </mat-list-item>
+  <mat-list-item>
+    <h4 mat-line>{{localUser.latitude}}</h4>
+    <p mat-line translate>user.latitude</p>
+  </mat-list-item>
+</mat-list>

@@ -97,7 +97,12 @@
       "done": "New user is created"
     },
     "details": {
-      "header": "Details"
+      "header": "Details",
+      "title": "User's Details"
+    },
+    "edit": {
+      "title": "Change User Details",
+      "submit": "Submit changes"
     },
     "errors": {
       "not-found": "The user is not found (was deleted previously)",
