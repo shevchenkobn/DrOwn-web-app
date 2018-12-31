@@ -54,3 +54,27 @@ export function newUserOnErrorMessage(err: any) {
   }
   return msg;
 }
+
+export function userUpdateOnErrorMessage(err: unknown, prefix: string, email?: string) {
+  console.error(err);
+  let msg: string;
+  let replacer: ((str: string) => string) | null = null;
+  if (isClientHttpError(err)) {
+    switch (err.error.code as string) {
+      case ServerErrorCode.USER_EMAIL_DUPLICATE:
+        msg = `${prefix}email`;
+        replacer = msgTpl => msgTpl.replace('{{email}}', email as string);
+        break;
+
+      case ServerErrorCode.NOT_FOUND:
+        msg = `${prefix}not-found`;
+        break;
+
+      default:
+        msg = 'errors.unknown';
+    }
+  } else {
+    msg = 'errors.network';
+  }
+  return [msg, replacer] as [string, ((str: string) => string) | null];
+}

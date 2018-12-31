@@ -37,9 +37,15 @@ export function latitudeValidator(control: AbstractControl) {
 }
 
 export function coordsValidator(longitudeName: string, latitudeName: string) {
-  return (formGroup: FormGroup) => {
+  return (formGroup: AbstractControl) => {
     const longitude = formGroup.get(longitudeName) as FormControl;
     const latitude = formGroup.get(latitudeName) as FormControl;
-    return !!longitude.value !== !!latitude.value ? { notCoords: true } : null;
+    console.log(longitude.value, latitude.value);
+    return (
+      typeof longitude.value !== typeof latitude.value
+      || !!longitude.value !== !!latitude.value
+    )
+      ? { notCoords: true }
+      : null;
   };
 }

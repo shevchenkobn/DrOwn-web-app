@@ -2,7 +2,19 @@
   <mat-card-title translate>users.edit.title</mat-card-title>
   <mat-card-content>
     <mat-toolbar>
-
+      <div class="align-right">
+        <button mat-button color="warn"
+                [disabled]="isMakingRequest"
+                (click)="changePassword()">
+          {{'password.change-btn' | translate}}
+        </button>
+        <span class="spacer-1"></span>
+        <button mat-button color="warn"
+                [disabled]="isMakingRequest"
+                (click)="resetPassword()">
+          {{'password.reset-btn' | translate}}
+        </button>
+      </div>
     </mat-toolbar>
     <app-user-update-core (userSubmit)="updateUser($event)"
                           submitButtonValue="users.edit.submit"

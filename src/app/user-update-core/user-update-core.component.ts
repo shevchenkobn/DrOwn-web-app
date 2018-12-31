@@ -26,6 +26,7 @@ export class UserUpdateCoreComponent implements OnInit {
   @Output() public userSubmit: EventEmitter<Partial<IUser>>;
   @Input() public submitButtonValue!: string;
   @Input() public disable!: boolean;
+  @Input() public enableRoles = true;
   @Input()
   set user(newUser: Readonly<IUser>) {
     this._user = newUser;
@@ -54,12 +55,9 @@ export class UserUpdateCoreComponent implements OnInit {
     this.errorStateMatcher = new FormInvalidMatcher(true);
   }
 
-  isAdmin() {
-    return this._user.role & UserRoles.ADMIN;
-  }
-
   toggleRole(roleName: string) {
     this.userRoles[roleName] = !this.userRoles[roleName];
+    this.form.updateValueAndValidity();
   }
 
   updateUser() {
@@ -67,7 +65,7 @@ export class UserUpdateCoreComponent implements OnInit {
     if (emailControl.dirty) {
       this._dialog.open(ConfirmDialogComponent, {
         data: {
-          message: 'profile.update.email-q'
+          message: 'users.edit.email-q'
         },
         autoFocus: false
       }).afterClosed().subscribe(yes => {
@@ -91,18 +89,26 @@ export class UserUpdateCoreComponent implements OnInit {
     if (emailControl.dirty) {
       updateUser.email = emailControl.value;
     }
-    updateUser.role = userRoleFromObject(this.userRoles);
+    if (this.enableRoles) {
+      updateUser.role = userRoleFromObject(this.userRoles);
+    }
     const nameControl = this.form.get('name') as FormControl;
     if (nameControl.dirty) {
       updateUser.name = nameControl.value;
     }
     const longitudeControl = this.form.get('longitude') as FormControl;
     if (longitudeControl.dirty) {
-      updateUser.longitude = Number.parseFloat(longitudeControl.value);
+      const longitude = Number.parseFloat(longitudeControl.value);
+      if (!Number.isNaN(longitude)) {
+        updateUser.longitude = longitude;
+      }
     }
     const latitudeControl = this.form.get('latitude') as FormControl;
     if (latitudeControl.dirty) {
-      updateUser.latitude = Number.parseFloat(latitudeControl.value);
+      const latitude = Number.parseFloat(latitudeControl.value);
+      if (!Number.isNaN(latitude)) {
+        updateUser.latitude = latitude;
+      }
     }
     return updateUser;
   }
@@ -114,19 +120,27 @@ export class UserUpdateCoreComponent implements OnInit {
       longitude: ['', longitudeValidator],
       latitude: ['', latitudeValidator],
     }, {
-      validators: [
-        coordsValidator('longitude', 'latitude'),
-        userRoleValidator(this.userRoles),
-      ],
       updateOn: 'change'
     });
   }
 
   private populateFormWithUser() {
-    if (!this.userRoles) {
-      this.userRoles = userRoleToObject(this._user);
+    if (this.enableRoles) {
+      if (!this.userRoles) {
+        this.userRoles = userRoleToObject(this._user);
+        this.form.setValidators([
+          coordsValidator('longitude', 'latitude'),
+          userRoleValidator(this.userRoles),
+        ]);
+        this.form.updateValueAndValidity();
+      } else {
+        updateRoleObjectForUser(this.userRoles, this._user);
+      }
     } else {
-      updateRoleObjectForUser(this.userRoles, this._user);
+      console.log('wat');
+      this.form.setValidators([
+        coordsValidator('longitude', 'latitude'),
+      ]);
     }
     this.form.setValue({
       email: this._user.email,

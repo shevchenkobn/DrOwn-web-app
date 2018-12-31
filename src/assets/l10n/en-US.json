@@ -39,16 +39,13 @@
     "refresh": "Refresh profile",
     "edit-mode": "Edit mode",
     "update": {
-      "email-q": "Are you sure you want to change your email for login?",
       "btn": "Update profile"
     },
     "updated": {
       "msg": "The profile was updated!",
-      "password": "The password was updated!",
-      "ok": "OK"
+      "password": "The password was updated!"
     },
     "password": {
-      "change-q": "Are you sure you want to change your password?",
       "reset-q": "Are you sure you want to reset your password?",
       "show": {
         "title": "Your new password",
@@ -64,7 +61,8 @@
   "dialog": {
     "yes": "Yes",
     "no": "No",
-    "ok": "OK"
+    "ok": "OK",
+    "ok-good": "OK"
   },
   "user": {
     "email": "Email",
@@ -102,7 +100,19 @@
     },
     "edit": {
       "title": "Change User Details",
-      "submit": "Submit changes"
+      "email-q": "Are you sure you want to change the email for login?",
+      "submit": "Submit changes",
+      "done": "User was updated",
+      "errors": {
+        "email": "Email {{email}} is taken by other user",
+        "not-found": "The user was deleted from the other session"
+      },
+      "password": {
+        "reset-q": "Are you sure you want to reset the password for this user?",
+        "update": {
+          "done": "The password was changed"
+        }
+      }
     },
     "errors": {
       "not-found": "The user is not found (was deleted previously)",
@@ -116,6 +126,7 @@
   "password": {
     "change-btn": "Change password",
     "reset-btn": "Reset password",
+    "change-q": "Are you sure you want to the password?",
     "change": {
       "title": "Enter new password",
       "password-label": "Password",

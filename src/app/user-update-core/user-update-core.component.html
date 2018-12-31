@@ -8,7 +8,7 @@
            name="email"/>
     <mat-error *ngIf="controls.email.errors" translate>user-errors.email</mat-error>
   </mat-form-field>
-  <div *ngIf="isAdmin()">
+  <div *ngIf="enableRoles">
     <p translate>user.role</p>
     <mat-list>
       <mat-list-item *ngFor="let roleName of rolesNames">
@@ -18,6 +18,9 @@
         </mat-checkbox>
       </mat-list-item>
     </mat-list>
+    <mat-error *ngIf="form.errors && form.errors.userRole" translate>
+      user-errors.role
+    </mat-error>
   </div>
   <mat-form-field class="fit-parent-width">
     <mat-label translate>user.name</mat-label>
@@ -33,7 +36,8 @@
     <input matInput
            type="number"
            formControlName="longitude"
-           name="longitude"/>
+           name="longitude"
+           [errorStateMatcher]="errorStateMatcher"/>
     <mat-error *ngIf="controls.longitude.errors" translate>user-errors.longitude</mat-error>
     <mat-error *ngIf="form.errors && form.errors.notCoords" translate>user-errors.coords
     </mat-error>
@@ -43,7 +47,8 @@
     <input matInput
            type="number"
            formControlName="latitude"
-           name="latitude"/>
+           name="latitude"
+           [errorStateMatcher]="errorStateMatcher"/>
     <mat-error *ngIf="controls.latitude.errors" translate>user-errors.latitude</mat-error>
     <mat-error *ngIf="form.errors && form.errors.notCoords" translate>user-errors.coords
     </mat-error>
@@ -51,6 +56,6 @@
   <mat-toolbar>
     <button mat-raised-button color="primary"
             [disabled]="!form.valid || disable"
-            (click)="updateUser()">{{'profile.update.btn' | translate}}</button>
+            (click)="updateUser()">{{submitButtonValue | translate}}</button>
   </mat-toolbar>
 </form>

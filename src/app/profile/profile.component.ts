@@ -23,7 +23,8 @@ import {
   latitudeValidator,
   longitudeValidator,
 } from '../_validators/coordinates.validator';
-
+import { userUpdateOnErrorMessage } from '../_utils';
+// 'profile.update.btn'
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -112,11 +113,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
         )
         .subscribe(user => {
           this.updateUser(user);
-          this.l10n.translate.get(['profile.updated.password', 'profile.updated.ok']).subscribe(
+          this.l10n.translate.get(['profile.updated.password', 'dialog.ok-good']).subscribe(
             translations => {
               this._snackBar.open(
                 translations['profile.updated.password'],
-                translations['profile.updated.ok']
+                translations['dialog.ok-good']
               );
             }
           );
@@ -130,7 +131,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     if (emailControl.dirty) {
       this._dialog.open(ConfirmDialogComponent, {
         data: {
-          message: 'profile.update.email-q'
+          message: 'users.edit.email-q'
         },
         autoFocus: false
       }).afterClosed().subscribe(yes => {
@@ -157,36 +158,17 @@ export class ProfileComponent implements OnInit, OnDestroy {
       .subscribe(
         user => {
           this.updateUser(user);
-          this.l10n.translate.get(['profile.updated.msg', 'profile.updated.ok']).subscribe(
+          this.l10n.translate.get(['profile.updated.msg', 'dialog.ok-good']).subscribe(
             translations => {
               this._snackBar.open(
                 translations['profile.updated.msg'],
-                translations['profile.updated.ok']
+                translations['dialog.ok-good']
               );
             }
           );
         },
         err => {
-          console.error(err);
-          let msg: string;
-          let replacer: ((str: string) => string) | null = null;
-          if (isClientHttpError(err)) {
-            switch (err.error.code as string) {
-              case ServerErrorCode.USER_EMAIL_DUPLICATE:
-                msg = 'profile.errors.email';
-                replacer = msgTpl => msgTpl.replace('{{email}}', updateUser.email as string);
-                break;
-
-              case ServerErrorCode.NOT_FOUND:
-                msg = 'profile.errors.not-found';
-                break;
-
-              default:
-                msg = 'errors.unknown';
-            }
-          } else {
-            msg = 'errors.network';
-          }
+          const [msg, replacer] = userUpdateOnErrorMessage(err, 'profile.errors.', updateUser.email);
           this.l10n.translate.get([msg, 'dialog.ok']).subscribe(
             translations => {
               this._snackBar
@@ -283,7 +265,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
             this._dialog.open(ShowPasswordDialogComponent, {
               data: {
                 password,
-                fromProfile: false
+                fromProfile: true
               },
               autoFocus: false
             });

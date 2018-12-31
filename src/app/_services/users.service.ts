@@ -14,7 +14,7 @@ export interface IUserId {
 export class UsersService {
   public static readonly USERS_BASE = 'users/';
   public static readonly PARAMS: Readonly<{ [name: string]: string | string[] }> = {
-    'select': ['email', 'role', 'name', 'latitude', 'longitude', 'userId'].join(','),
+    'select': ['userId', 'email', 'role', 'name', 'latitude', 'longitude'].join(','),
   };
 
   protected _http: HttpClient;

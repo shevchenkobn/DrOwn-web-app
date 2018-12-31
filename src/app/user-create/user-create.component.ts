@@ -50,7 +50,6 @@ export class UserCreateComponent implements OnInit, OnDestroy {
 
   public createUser({user: newUser, generatedPassword}: IUserCreateInfo) {
     this.isMakingRequest = true;
-    console.log(newUser);
     this._users.createUser(newUser as IUser, generatedPassword as true).pipe(
       finalize(() => {
         this.isMakingRequest = false;
