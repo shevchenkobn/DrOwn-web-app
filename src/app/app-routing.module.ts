@@ -23,6 +23,8 @@ import { UserResolver } from './_resolvers/user.resolver';
 import { RegisterComponent } from './register/register.component';
 import { UserDetailComponent } from './user-detail/user-detail.component';
 import { UserUpdateComponent } from './user-update/user-update.component';
+import { DronesComponent } from './drones/drones.component';
+import { DronesResolver } from './_resolvers/drones.resolver';
 
 export const dashboardPaths = {
   users: 'users',
@@ -83,7 +85,23 @@ export const routes: Routes = [
           profile: ProfileResolver,
         },
       },
-      // { path: 'drones' } !authrolse
+      {
+        path: 'drones',
+        canActivate: [AuthGuard],
+        data: {
+          authRoles: UserRoles.OWNER
+        },
+        children: [
+          {
+            path: '',
+            pathMatch: 'full',
+            component: DronesComponent,
+            resolve: {
+              drones: DronesResolver
+            }
+          }
+        ]
+      },
       {
         path: '', pathMatch: 'full', redirectTo: 'profile'
       }

@@ -40,7 +40,6 @@ export function coordsValidator(longitudeName: string, latitudeName: string) {
   return (formGroup: AbstractControl) => {
     const longitude = formGroup.get(longitudeName) as FormControl;
     const latitude = formGroup.get(latitudeName) as FormControl;
-    console.log(longitude.value, latitude.value);
     return (
       typeof longitude.value !== typeof latitude.value
       || !!longitude.value !== !!latitude.value

@@ -47,7 +47,7 @@
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let user">
           <button mat-icon-button color="warn"
-                  *ngIf="user.userId !== '1' && user.userId !== currentUser.userId"
+                  *ngIf="user.userId !== MASTER_ADMIN_ID && user.userId !== currentUser.userId"
                   (click)="deleteUser(user.userId)"
                   [disabled]="isMakingRequest">
             <mat-icon>delete</mat-icon>

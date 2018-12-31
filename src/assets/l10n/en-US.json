@@ -151,5 +151,20 @@
     "done": "Registration is successful!",
     "login": "Please, enter your credentials to log in",
     "submit": "Register"
+  },
+  "drones": {
+    "list": {
+      "title": "Your Drones"
+    },
+    "details": {
+      "header": "Details"
+    },
+    "delete": {
+      "q": "Do you really want to delete the drone?",
+      "done": "The drone was successfully deleted"
+    },
+    "errors": {
+      "not-found": "The drone is not found"
+    }
   }
 }
