@@ -78,3 +78,29 @@ export function userUpdateOnErrorMessage(err: unknown, prefix: string, email?: s
   }
   return [msg, replacer] as [string, ((str: string) => string) | null];
 }
+
+export function droneChangeOnErrorMessage(err: unknown) {
+  console.error(err);
+  let msg: string;
+  if (isClientHttpError(err)) {
+    msg = getCommonErrorMessage(err);
+    if (msg) {
+      return msg;
+    }
+    switch (err.error.code) {
+      case ServerErrorCode.DRONE_DEVICE_ID_BAD:
+        msg = 'drones.errors.device-id';
+        break;
+
+      case ServerErrorCode.NOT_FOUND:
+        msg = 'drones.errors.not-found';
+        break;
+
+      default:
+        msg = 'errors.unknown';
+    }
+  } else {
+    msg = 'errors.unknown';
+  }
+  return msg;
+}

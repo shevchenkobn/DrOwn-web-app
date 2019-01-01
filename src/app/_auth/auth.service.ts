@@ -4,7 +4,7 @@ import { HttpUrlHelper } from '../_http/http-url.helper';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { finalize, map, shareReplay, tap } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
-import { IPasswordUser, IUser, UserRoles } from '../_model/user.model';
+import { IPasswordUser, IUser, UserRoles } from '../_models/user.model';
 import { ActivatedRouteSnapshot } from '@angular/router';
 import { UsersService } from '../_services/users.service';
 

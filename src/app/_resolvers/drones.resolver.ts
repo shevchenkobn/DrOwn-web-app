@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IDrone } from '../_model/drone.model';
+import { IDrone } from '../_models/drone.model';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { DronesService } from '../_services/drones.service';
 import { Observable } from 'rxjs';

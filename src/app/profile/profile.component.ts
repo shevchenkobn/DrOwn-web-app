@@ -6,7 +6,7 @@ import {
   userRoleNames,
   UserRoles,
   userRoleToObject,
-} from '../_model/user.model';
+} from '../_models/user.model';
 import { Subscription } from 'rxjs';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';

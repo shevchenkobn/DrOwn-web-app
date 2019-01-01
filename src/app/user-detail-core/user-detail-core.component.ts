@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { IUser, userRoleNames, userRoleToObject } from '../_model/user.model';
+import { IUser, userRoleNames, userRoleToObject } from '../_models/user.model';
 
 @Component({
   selector: 'app-user-detail-core',

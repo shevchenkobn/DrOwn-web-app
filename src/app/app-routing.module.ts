@@ -17,7 +17,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { ProfileResolver } from './_auth/profile.resolver';
 import { UsersResolver } from './_resolvers/users.resolver';
 import { UserCreateComponent } from './user-create/user-create.component';
-import { UserRoles } from './_model/user.model';
+import { UserRoles } from './_models/user.model';
 import { UserDetailCoreComponent } from './user-detail-core/user-detail-core.component';
 import { UserResolver } from './_resolvers/user.resolver';
 import { RegisterComponent } from './register/register.component';
@@ -25,6 +25,7 @@ import { UserDetailComponent } from './user-detail/user-detail.component';
 import { UserUpdateComponent } from './user-update/user-update.component';
 import { DronesComponent } from './drones/drones.component';
 import { DronesResolver } from './_resolvers/drones.resolver';
+import { DroneCreateComponent } from './drone-create/drone-create.component';
 
 export const dashboardPaths = {
   users: 'users',
@@ -99,6 +100,10 @@ export const routes: Routes = [
             resolve: {
               drones: DronesResolver
             }
+          },
+          {
+            path: 'create',
+            component: DroneCreateComponent
           }
         ]
       },

@@ -67,6 +67,7 @@ import { UserUpdateCoreComponent } from './user-update-core/user-update-core.com
 import { UserDetailComponent } from './user-detail/user-detail.component';
 import { UserUpdateComponent } from './user-update/user-update.component';
 import { DronesComponent } from './drones/drones.component';
+import { DroneCreateComponent } from './drone-create/drone-create.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/l10n/', '.json');
@@ -94,6 +95,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     UserDetailComponent,
     UserUpdateComponent,
     DronesComponent,
+    DroneCreateComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { IPasswordUser, IUser } from '../_model/user.model';
+import { IPasswordUser, IUser } from '../_models/user.model';
 import { Observable } from 'rxjs';
 
 export interface IUserId {

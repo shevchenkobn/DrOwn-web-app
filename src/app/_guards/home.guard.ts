@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
-import { IUser, UserRoles } from '../_model/user.model';
+import { IUser, UserRoles } from '../_models/user.model';
 import { AuthService } from '../_auth/auth.service';
 import { map, switchMap } from 'rxjs/operators';
 

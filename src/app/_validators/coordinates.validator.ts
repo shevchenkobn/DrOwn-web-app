@@ -12,7 +12,7 @@ export function longitudeValidator(control: AbstractControl) {
   }
   if (num < -180 || num > 180) {
     return {
-      beyondLimits: true
+      longitude: true
     };
   }
   return null;
@@ -30,7 +30,7 @@ export function latitudeValidator(control: AbstractControl) {
   }
   if (num < -90 || num > 90) {
     return {
-      beyondLimits: true
+      latitude: true
     };
   }
   return null;

@@ -154,7 +154,16 @@
   },
   "drones": {
     "list": {
-      "title": "Your Drones"
+      "title": "Your Drones",
+      "no-drones": {
+        "title": "You don't have any drones :(",
+        "add-some": "Try adding some!"
+      }
+    },
+    "create": {
+      "title": "Create New Drone",
+      "submit": "Create",
+      "done": "The drone was created!"
     },
     "details": {
       "header": "Details"
@@ -164,7 +173,32 @@
       "done": "The drone was successfully deleted"
     },
     "errors": {
+      "device-id": "A drone with such machine ID already exists",
       "not-found": "The drone is not found"
     }
+  },
+  "drone": {
+    "device-id": "Machine ID",
+    "status": "Status",
+    "base-longitude": "Home Longitude",
+    "base-latitude": "Home Latitude",
+    "battery-power": "Battery Power",
+    "engine-power": "Engine Power",
+    "load-capacity": "Load Capacity",
+    "can-carry-liquids": "Can Carry Liquids"
+  },
+  "drone-statuses": {
+    "UNAUTHORIZED": "Unactivated",
+    "OFFLINE": "Offline",
+    "IDLE": "Idle",
+    "WORKING": "Working"
+  },
+  "drone-errors": {
+    "device-id": "Machine ID must consist of 12 hexadecimal numbers",
+    "engine-power": "Engine power must be a non-negative number",
+    "battery-power": "Battery power must be a non-negative number",
+    "load-capacity": "Load capacity must be a non-negative number",
+    "no-latitude": "Latitude is not set for user nor for drone",
+    "no-longitude": "Longitude is not set for user nor for drone"
   }
 }

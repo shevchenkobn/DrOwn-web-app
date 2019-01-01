@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { IDrone } from '../_model/drone.model';
+import { IDrone, IDroneInput } from '../_models/drone.model';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -11,6 +11,7 @@ export class DronesService {
   public static readonly DRONE_PARAMS = {
     select: [
       'droneId',
+      'deviceId',
       'ownerId',
       'status',
       'baseLongitude',
@@ -51,4 +52,15 @@ export class DronesService {
     );
   }
 
+  createDrone(drone: IDroneInput, returnDrone?: true): Observable<IDrone>;
+  createDrone(drone: IDroneInput, returnDrone: false): Observable<null>;
+  createDrone(drone: IDroneInput, returnDrone = true): Observable<IDrone | null> {
+    return this._http.post<IDrone | null>(
+      DronesService.DRONES_BASE,
+      drone,
+      {
+        params: returnDrone ? DronesService.DRONE_PARAMS : {},
+      }
+    );
+  }
 }

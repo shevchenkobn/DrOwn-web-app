@@ -6,7 +6,7 @@ import {
   userRoleNames,
   UserRoles,
   userRoleToObject,
-} from '../_model/user.model';
+} from '../_models/user.model';
 import { ErrorStateMatcher, MatDialog } from '@angular/material';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import {

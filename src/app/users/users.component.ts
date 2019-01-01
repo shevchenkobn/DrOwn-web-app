@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UsersService } from '../_services/users.service';
 import { ActivatedRoute } from '@angular/router';
-import { IUser, userRoleNames, userRoleToObject } from '../_model/user.model';
+import { IUser, userRoleNames, userRoleToObject } from '../_models/user.model';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { finalize, switchMap } from 'rxjs/operators';
 import {
@@ -59,6 +59,7 @@ export class UsersComponent implements OnInit, OnDestroy {
       if (!yes) {
         return;
       }
+      this.isMakingRequest = true;
       this._users.deleteUser({ userId }).pipe(
         switchMap(() => {
           return this._users.getUsers();

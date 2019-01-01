@@ -3,14 +3,9 @@ import { UsersService } from '../_services/users.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   IUser,
-} from '../_model/user.model';
+} from '../_models/user.model';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { finalize } from 'rxjs/operators';
-import {
-  getCommonErrorMessage,
-  isClientHttpError,
-  ServerErrorCode,
-} from '../_services/error-codes';
 import { L10nService } from '../_services/l10n.service';
 import { InfoDialogComponent } from '../info-dialog/info-dialog.component';
 import { ShowPasswordDialogComponent } from '../show-password-dialog/show-password-dialog.component';

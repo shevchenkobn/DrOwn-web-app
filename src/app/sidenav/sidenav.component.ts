@@ -5,7 +5,7 @@ import { routes } from '../app-routing.module';
 import { LocalizeRouterService } from 'localize-router';
 import { AuthService } from '../_auth/auth.service';
 import { Subscription } from 'rxjs';
-import { IUser, UserRoles } from '../_model/user.model';
+import { IUser, UserRoles } from '../_models/user.model';
 import { Router } from '@angular/router';
 
 @Component({

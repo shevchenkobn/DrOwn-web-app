@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UsersService } from '../_services/users.service';
-import { IUser } from '../_model/user.model';
+import { IUser } from '../_models/user.model';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { L10nService } from '../_services/l10n.service';
 import { finalize } from 'rxjs/operators';

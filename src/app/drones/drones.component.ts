@@ -1,9 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { UsersService } from '../_services/users.service';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { L10nService } from '../_services/l10n.service';
-import { IDrone } from '../_model/drone.model';
+import { DroneStatus, IDrone } from '../_models/drone.model';
 import { DronesService } from '../_services/drones.service';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { finalize, switchMap } from 'rxjs/operators';
@@ -29,6 +28,7 @@ export class DronesComponent implements OnInit, OnDestroy {
   public isMakingRequest!: boolean;
   public drones!: IDrone[];
   public columnsToDisplay = ['deviceId', 'status', 'loadCapacity', 'details', 'delete'];
+  public droneStatus = DroneStatus;
 
   constructor(
     drones: DronesService,
@@ -44,16 +44,32 @@ export class DronesComponent implements OnInit, OnDestroy {
     this._l10n = l10n;
   }
 
+  public canBeDeleted(drone: IDrone) {
+    return drone.status === DroneStatus.OFFLINE || drone.status === DroneStatus.UNAUTHORIZED;
+  }
+
+  public refreshDrone() {
+    this.isMakingRequest = true;
+    this._drones.getDrones().pipe(
+      finalize(() => {
+        this.isMakingRequest = false;
+      })
+    ).subscribe(drones => {
+      this.drones = drones;
+    });
+  }
+
   public deleteDrone(droneId: string) {
     this._dialog.open(ConfirmDialogComponent, {
       data: {
-        message: 'users.delete-q'
+        message: 'drones.delete.q'
       },
       autoFocus: false
     }).afterClosed().subscribe(yes => {
       if (!yes) {
         return;
       }
+      this.isMakingRequest = true;
       this._drones.deleteDrone(droneId).pipe(
         switchMap(() => {
           return this._drones.getDrones();
@@ -64,8 +80,8 @@ export class DronesComponent implements OnInit, OnDestroy {
       ).subscribe(
         (drones) => {
           this.drones = drones;
-          this._l10n.translate.get(['drones.delete.q', 'dialog.ok']).subscribe(
-            ({'drones.delete.q': msg, 'dialog.ok': ok}) => {
+          this._l10n.translate.get(['drones.delete.done', 'dialog.ok']).subscribe(
+            ({'drones.delete.done': msg, 'dialog.ok': ok}) => {
               this._snackBar.open(msg, ok);
             }
           );
