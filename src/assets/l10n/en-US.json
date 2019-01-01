@@ -166,11 +166,26 @@
       "done": "The drone was created!"
     },
     "details": {
-      "header": "Details"
+      "header": "Details",
+      "title": "Drone Details",
+      "can-carry-liquids": {
+        "yes": "Can Carry Liquids",
+        "no": "Cannot Carry Liquids"
+      }
     },
     "delete": {
       "q": "Do you really want to delete the drone?",
       "done": "The drone was successfully deleted"
+    },
+    "edit": {
+      "title": "Change Drone",
+      "submit": "Send changes",
+      "done": "The drone was changed!",
+      "reset": {
+        "btn": "Reset Authorization",
+        "q": "Are you sure you want reset password for the drone?",
+        "done": "The password for the drone was reset!"
+      }
     },
     "errors": {
       "device-id": "A drone with such machine ID already exists",

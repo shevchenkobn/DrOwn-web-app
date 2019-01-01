@@ -4,7 +4,7 @@
     <mat-toolbar>
       <button mat-icon-button color="primary"
               [disabled]="isMakingRequest"
-              (click)="refreshDrone()">
+              (click)="refreshDrones()">
         <mat-icon>refresh</mat-icon>
       </button>
       <div class="align-right">
@@ -17,7 +17,7 @@
         </a>
       </div>
     </mat-toolbar>
-    <table mat-table [dataSource]="drones" class="fill-parent-width">
+    <table mat-table [dataSource]="drones" class="width-100" *ngIf="drones.length > 0">
       <ng-container matColumnDef="deviceId">
         <th mat-header-cell *matHeaderCellDef translate>drone.device-id</th>
         <td mat-cell *matCellDef="let drone">{{drone.deviceId}}</td>
@@ -51,7 +51,6 @@
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let drone">
           <button mat-icon-button color="warn"
-                  *ngIf="canBeDeleted(drone)"
                   (click)="deleteDrone(drone.droneId)"
                   [class.disabled]="isMakingRequest"
                   [disabled]="isMakingRequest">

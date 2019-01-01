@@ -1,18 +1,16 @@
 <mat-card>
-  <mat-card-title>{{'drones.create.title' | translate}}</mat-card-title>
+  <mat-card-title translate>drones.edit.title</mat-card-title>
   <mat-card-content>
-    <mat-progress-bar mode="indeterminate"
-                      [style.visibility]="isMakingRequest ? 'visible' : 'hidden'"></mat-progress-bar>
+    <mat-toolbar *ngIf="drone.status !== droneStatus.UNAUTHORIZED">
+      <div class="align-right">
+        <button mat-button color="warn"
+                [disabled]="isMakingRequest"
+                (click)="resetPassword()">
+          {{'drones.edit.reset.btn' | translate}}
+        </button>
+      </div>
+    </mat-toolbar>
     <form [formGroup]="form">
-      <mat-form-field class="fit-parent-width">
-        <mat-label translate>drone.device-id</mat-label>
-        <input matInput
-               type="text"
-               required="required"
-               formControlName="deviceId"
-               name="deviceId"/>
-        <mat-error *ngIf="controls.deviceId.errors" translate>drone-errors.device-id</mat-error>
-      </mat-form-field>
       <mat-form-field class="fit-parent-width">
         <mat-label translate>drone.battery-power</mat-label>
         <input matInput
@@ -62,9 +60,6 @@
         <mat-error *ngIf="form.errors?.notCoords" translate>
           user-errors.coords
         </mat-error>
-        <mat-error *ngIf="controls.baseLongitude.errors?.ownerLongitude" translate>
-          drone-errors.no-longitude
-        </mat-error>
       </mat-form-field>
       <mat-form-field class="fit-parent-width">
         <mat-label translate>drone.base-latitude</mat-label>
@@ -77,16 +72,13 @@
         <mat-error *ngIf="form.errors?.notCoords" translate>
           user-errors.coords
         </mat-error>
-        <mat-error *ngIf="controls.baseLatitude.errors?.ownerLatitude" translate>
-          drone-errors.no-latitude
-        </mat-error>
       </mat-form-field>
     </form>
     <mat-toolbar>
       <button mat-raised-button color="primary"
               [disabled]="isMakingRequest || form.invalid"
-              (click)="createDrone()">
-        {{'drones.create.submit' | translate}}
+              (click)="updateDrone()">
+        {{'drones.edit.submit' | translate}}
       </button>
     </mat-toolbar>
   </mat-card-content>

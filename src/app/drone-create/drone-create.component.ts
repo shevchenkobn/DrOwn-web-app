@@ -69,12 +69,6 @@ export class DroneCreateComponent implements OnInit, OnDestroy {
     this._l10n = l10nService;
     this._auth = auth;
 
-    if (this._auth.hasUser()) {
-      this._owner = this._auth.getUser();
-    }
-
-    this._droneCoordsValidatorHelper =
-      new DroneCoordsValidatorHelper(this._auth.onUserRefresh, this._owner);
     this.initializeForm();
   }
 
@@ -157,8 +151,8 @@ export class DroneCreateComponent implements OnInit, OnDestroy {
 
       canCarryLiquids: [false],
 
-      baseLongitude: [null, [longitudeValidator, this._droneCoordsValidatorHelper.longitudeValidate]],
-      baseLatitude: [null, [latitudeValidator, this._droneCoordsValidatorHelper.latitudeValidate]],
+      baseLongitude: [null],
+      baseLatitude: [null],
     }, {
       validators: [
         coordsValidator('baseLongitude', 'baseLatitude'),
@@ -167,10 +161,23 @@ export class DroneCreateComponent implements OnInit, OnDestroy {
     });
   }
 
+  private finishFormInitialization() {
+    (this.form.get('baseLongitude') as FormControl).setValidators(
+      [longitudeValidator, this._droneCoordsValidatorHelper.longitudeValidate]
+    );
+    (this.form.get('baseLatitude') as FormControl).setValidators(
+      [latitudeValidator, this._droneCoordsValidatorHelper.latitudeValidate]
+    );
+  }
+
   ngOnInit() {
     this.isMakingRequest = false;
     this.errorStateMatcherFactory = InvalidByFormFieldsMatcher.getFactory(true);
 
+    this._owner = this._route.snapshot.data['owner'];
+    this._droneCoordsValidatorHelper =
+      new DroneCoordsValidatorHelper(this._auth.onUserRefresh, this._owner);
+    this.finishFormInitialization();
     this._refreshUser$ = this._auth.refreshUser().subscribe(owner => {
       this._owner = owner;
     });
@@ -179,5 +186,6 @@ export class DroneCreateComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this._snackBar.dismiss();
     this._droneCoordsValidatorHelper.ngOnDestroy();
+    this._refreshUser$.unsubscribe();
   }
 }

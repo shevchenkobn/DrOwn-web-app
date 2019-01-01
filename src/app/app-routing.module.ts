@@ -26,6 +26,9 @@ import { UserUpdateComponent } from './user-update/user-update.component';
 import { DronesComponent } from './drones/drones.component';
 import { DronesResolver } from './_resolvers/drones.resolver';
 import { DroneCreateComponent } from './drone-create/drone-create.component';
+import { DroneDetailsComponent } from './drone-details/drone-details.component';
+import { DroneUpdateComponent } from './drone-update/drone-update.component';
+import { DroneResolver } from './_resolvers/drone.resolver';
 
 export const dashboardPaths = {
   users: 'users',
@@ -56,20 +59,17 @@ export const routes: Routes = [
       },
       {
         path: ':id',
+        resolve: {
+          user: UserResolver,
+        },
         children: [
           {
             path: '',
             component: UserDetailComponent,
-            resolve: {
-              user: UserResolver,
-            },
           },
           {
             path: 'edit',
             component: UserUpdateComponent,
-            resolve: {
-              user: UserResolver
-            }
           }
         ]
       },
@@ -103,7 +103,29 @@ export const routes: Routes = [
           },
           {
             path: 'create',
-            component: DroneCreateComponent
+            component: DroneCreateComponent,
+            resolve: {
+              owner: ProfileResolver
+            }
+          },
+          {
+            path: ':id',
+            resolve: {
+              drone: DroneResolver
+            },
+            children: [
+              {
+                path: '',
+                component: DroneDetailsComponent
+              },
+              {
+                path: 'edit',
+                component: DroneUpdateComponent,
+                resolve: {
+                  owner: ProfileResolver
+                }
+              },
+            ]
           }
         ]
       },

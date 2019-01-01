@@ -44,11 +44,7 @@ export class DronesComponent implements OnInit, OnDestroy {
     this._l10n = l10n;
   }
 
-  public canBeDeleted(drone: IDrone) {
-    return drone.status === DroneStatus.OFFLINE || drone.status === DroneStatus.UNAUTHORIZED;
-  }
-
-  public refreshDrone() {
+  public refreshDrones() {
     this.isMakingRequest = true;
     this._drones.getDrones().pipe(
       finalize(() => {

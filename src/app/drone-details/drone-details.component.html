@@ -1,0 +1,60 @@
+<mat-card>
+  <mat-card-title translate>drones.details.title</mat-card-title>
+  <mat-card-content class="mat-elevation-z4">
+    <mat-toolbar>
+      <button mat-icon-button color="primary"
+              [disabled]="isMakingRequest"
+              (click)="refreshDrone()">
+        <mat-icon>refresh</mat-icon>
+      </button>
+      <div class="align-right">
+        <a mat-icon-button color="accent"
+           *ngIf="canBeChanged()"
+           [disabled]="isMakingRequest"
+           [class.disabled]="isMakingRequest"
+           routerLink="edit">
+          <mat-icon>edit</mat-icon>
+        </a>
+      </div>
+    </mat-toolbar>
+    <mat-list>
+      <mat-list-item>
+        <h4 mat-line>{{drone.deviceId}}</h4>
+        <h4 mat-line translate>drone.device-id</h4>
+      </mat-list-item>
+      <mat-list-item>
+        <h4 mat-line translate>drone.status</h4>
+        <mat-chip-list mat-line>
+          <mat-chip color="accent" selected disableRipple>
+            {{'drone-statuses.' + droneStatus[drone.status] | translate}}
+          </mat-chip>
+        </mat-chip-list>
+      </mat-list-item>
+      <mat-list-item>
+        <h4 mat-line>{{drone.baseLongitude}}</h4>
+        <p mat-line translate>drone.base-longitude</p>
+      </mat-list-item>
+      <mat-list-item>
+        <h4 mat-line>{{drone.baseLatitude}}</h4>
+        <p mat-line translate>drone.base-latitude</p>
+      </mat-list-item>
+      <mat-list-item>
+        <h4 mat-line>{{drone.batteryPower}}</h4>
+        <p mat-line translate>drone.battery-power</p>
+      </mat-list-item>
+      <mat-list-item>
+        <h4 mat-line>{{drone.enginePower}}</h4>
+        <p mat-line translate>drone.engine-power</p>
+      </mat-list-item>
+      <mat-list-item>
+        <h4 mat-line>{{drone.loadCapacity}}</h4>
+        <p mat-line translate>drone.load-capacity</p>
+      </mat-list-item>
+      <mat-list-item>
+        <h4 mat-line translate>
+          {{'drones.details.can-carry-liquids.' + (drone.canCarryLiquids ? 'yes' : 'no') | translate}}
+        </h4>
+      </mat-list-item>
+    </mat-list>
+  </mat-card-content>
+</mat-card>

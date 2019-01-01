@@ -60,6 +60,18 @@ export class DronesService {
       drone,
       {
         params: returnDrone ? DronesService.DRONE_PARAMS : {},
+      },
+    );
+  }
+
+  updateDrone(droneId: string, updateDrone: Partial<IDroneInput>, returnDrone: false): Observable<null>;
+  updateDrone(droneId: string, updateDrone: Partial<IDroneInput>, returnDrone?: true): Observable<IDrone>;
+  updateDrone(droneId: string, updateDrone: Partial<IDroneInput>, returnDrone = true) {
+    return this._http.patch<IDrone | null>(
+      DronesService.DRONES_BASE + droneId,
+      updateDrone,
+      {
+        params: returnDrone ? DronesService.DRONE_PARAMS : {},
       }
     );
   }
