@@ -251,5 +251,40 @@
     "SKIPPED": "Skipped",
     "DONE": "Done",
     "TOO_FAR_GEO": "Too far"
+  },
+  "drone-measurements": {
+    "list": {
+      "title": "Drone Measurements",
+      "header": "Telemetry",
+      "none": {
+        "title": "No measurements found :(",
+        "hint": "Turn on a few drones to get some"
+      }
+    },
+    "delete": {
+      "title": "Delete Drone Measurements",
+      "hint": "Select limit dates of period to be deleted.",
+      "q": "Are you sure you want to delete the measurements?",
+      "submit": "Delete",
+      "cancel": "Cancel",
+      "startDate": "Start date",
+      "endDate": "End date",
+      "done": "The telemetry between {{startDate}} and {{endDate}} was deleted"
+    },
+    "errors": {
+      "re-limit": "End date is not larger that the start date"
+    }
+  },
+  "drone-measurement": {
+    "status": "Drone state",
+    "longitude": "Longitude",
+    "latitude": "Latitude",
+    "battery-charge": "Battery charge"
+  },
+  "drone-realtime-status": {
+    "WAITING": "Waiting",
+    "TAKING_CARGO": "Taking cargo",
+    "RELEASING_CARGO": "Releasing cargo",
+    "MOVING": "Moving"
   }
 }

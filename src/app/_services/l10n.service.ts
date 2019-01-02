@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Location } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
 import { LocalizeRouterService } from 'localize-router';
+import * as moment from 'moment';
+import 'moment/min/locales';
 
 const LOCALE_KEY = 'locale';
 const locales = ['en-US', 'uk-UA'];
@@ -32,7 +34,11 @@ export class L10nService {
     }
     // this.localizeRouter.changeLanguage(lang);
 
+    this.translate.onLangChange.subscribe(({ lang: newLang }: { lang: string}) => {
+      moment.locale(newLang);
+    });
     this.translate.use(lang);
+    moment.locale(lang);
     // this.translate.setDefaultLang(lang);
     localStorage.setItem(LOCALE_KEY, lang);
   }

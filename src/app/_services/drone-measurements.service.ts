@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, pipe } from 'rxjs';
-import { IDroneMeasurement } from '../_models/drone-measurements.model';
+import { IDroneMeasurement } from '../_models/drone-measurement.model';
 import { tap } from 'rxjs/operators';
 
 @Injectable({

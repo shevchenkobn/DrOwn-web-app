@@ -74,6 +74,7 @@ import { DroneOrdersComponent } from './drone-orders/drone-orders.component';
 import { DroneOrdersCreateComponent } from './drone-orders-create/drone-orders-create.component';
 import { DroneMeasurementsComponent } from './drone-measurements/drone-measurements.component';
 import { DroneMeasurementsDeleteDialogComponent } from './drone-measurements-delete-dialog/drone-measurements-delete-dialog.component';
+import { MomentModule } from 'ngx-moment';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/l10n/', '.json');
@@ -116,6 +117,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ReactiveFormsModule,
 
     AppOverlayModule,
+    MomentModule,
 
     TranslateModule.forRoot({
       loader: {
@@ -183,6 +185,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     PasswordChangeDialogComponent,
     ConfirmDialogComponent,
     InfoDialogComponent,
+    DroneMeasurementsDeleteDialogComponent,
   ]
 })
 export class AppModule { }

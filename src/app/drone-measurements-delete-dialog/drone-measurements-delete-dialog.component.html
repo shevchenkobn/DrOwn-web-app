@@ -1,3 +1,23 @@
-<p>
-  drone-measurements-delete-dialog works!
-</p>
+<h1 mat-dialog-title translate>drone-measurements.delete.title</h1>
+<div mat-dialog-content>
+  <h3 mat-line translate>drone-measurements.delete.hint</h3>
+  <mat-form-field class="fit-parent-width">
+    <input matInput [(ngModel)]="startDate" [max]="endDate" [matDatepicker]="startPicker" placeholder="{{'drone-measurements.delete.startDate' | translate}}">
+    <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+    <mat-datepicker #startPicker></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field class="fit-parent-width">
+    <input matInput [(ngModel)]="endDate" [max]="upperLimit" [matDatepicker]="endPicker" placeholder="{{'drone-measurements.delete.endDate' | translate}}">
+    <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+    <mat-datepicker #endPicker></mat-datepicker>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button
+          mat-raised-button
+          color="primary"
+          [disabled]="startDate >= endDate"
+          (click)="confirm()"
+          translate>{{ 'drone-measurements.delete.submit' | translate }}</button>
+  <button mat-button (click)="dialogRef.close()">{{ 'drone-measurements.delete.cancel' | translate }}</button>
+</div>
