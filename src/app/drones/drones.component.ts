@@ -27,7 +27,7 @@ export class DronesComponent implements OnInit, OnDestroy {
 
   public isMakingRequest!: boolean;
   public drones!: IDrone[];
-  public columnsToDisplay = ['deviceId', 'status', 'loadCapacity', 'details', 'delete'];
+  public columnsToDisplay = ['deviceId', 'status', 'loadCapacity', 'details', 'orders', 'delete'];
   public droneStatus = DroneStatus;
 
   constructor(

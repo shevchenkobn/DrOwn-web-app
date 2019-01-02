@@ -29,6 +29,9 @@ import { DroneCreateComponent } from './drone-create/drone-create.component';
 import { DroneDetailsComponent } from './drone-details/drone-details.component';
 import { DroneUpdateComponent } from './drone-update/drone-update.component';
 import { DroneResolver } from './_resolvers/drone.resolver';
+import { DroneOrdersComponent } from './drone-orders/drone-orders.component';
+import { DroneOrdersResolver } from './_resolvers/drone-orders.resolver';
+import { DroneOrdersCreateComponent } from './drone-orders-create/drone-orders-create.component';
 
 export const dashboardPaths = {
   users: 'users',
@@ -116,6 +119,7 @@ export const routes: Routes = [
             children: [
               {
                 path: '',
+                pathMatch: 'full',
                 component: DroneDetailsComponent
               },
               {
@@ -125,6 +129,20 @@ export const routes: Routes = [
                   owner: ProfileResolver
                 }
               },
+              {
+                path: 'orders',
+                children: [
+                  {
+                    path: '',
+                    pathMatch: 'full',
+                    component: DroneOrdersComponent,
+                  },
+                  {
+                    path: 'send',
+                    component: DroneOrdersCreateComponent,
+                  }
+                ]
+              }
             ]
           }
         ]

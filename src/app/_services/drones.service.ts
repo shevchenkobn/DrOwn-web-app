@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { IDrone, IDroneInput } from '../_models/drone.model';
 import { Observable } from 'rxjs';
+import { Maybe } from '../@types';
 
 @Injectable({
   providedIn: 'root',
@@ -29,9 +30,11 @@ export class DronesService {
     this._http = http;
   }
 
-  getDrones() {
+  getDrones(select?: Maybe<(keyof IDrone)[]>) {
     return this._http.get<IDrone[]>(DronesService.DRONES_BASE, {
-      params: DronesService.DRONE_PARAMS,
+      params: {
+        select: select && select.length > 0 ? select : DronesService.DRONE_PARAMS.select,
+      }
     });
   }
 

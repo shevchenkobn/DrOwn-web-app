@@ -215,5 +215,41 @@
     "load-capacity": "Load capacity must be a non-negative number",
     "no-latitude": "Latitude is not set for user nor for drone",
     "no-longitude": "Longitude is not set for user nor for drone"
+  },
+  "drone-orders": {
+    "header": "Orders",
+    "list": {
+      "title": "Drone Orders",
+      "no-status": "Drone hasn't responded",
+      "no-orders": {
+        "title": "You didn't order anything :(",
+        "add-some": "Try order something!"
+      }
+    },
+    "create": {
+      "title": "Send Order",
+      "done": "The order was sent!",
+      "submit": "Send"
+    }
+  },
+  "drone-order": {
+    "action": "Action type",
+    "status": "Status",
+    "longitude": "Longitude",
+    "latitude": "Latitude"
+  },
+  "drone-order-action": {
+    "STOP_AND_WAIT": "Stop and wait",
+    "MOVE_TO_LOCATION": "Move to location",
+    "TAKE_CARGO": "Take cargo",
+    "RELEASE_CARGO": "Release cargo"
+  },
+  "drone-order-status": {
+    "STARTED": "In process",
+    "ERROR": "Error",
+    "ENQUEUED": "Enqueued",
+    "SKIPPED": "Skipped",
+    "DONE": "Done",
+    "TOO_FAR_GEO": "Too far"
   }
 }
