@@ -72,6 +72,8 @@ import { DroneUpdateComponent } from './drone-update/drone-update.component';
 import { DroneDetailsComponent } from './drone-details/drone-details.component';
 import { DroneOrdersComponent } from './drone-orders/drone-orders.component';
 import { DroneOrdersCreateComponent } from './drone-orders-create/drone-orders-create.component';
+import { DroneMeasurementsComponent } from './drone-measurements/drone-measurements.component';
+import { DroneMeasurementsDeleteDialogComponent } from './drone-measurements-delete-dialog/drone-measurements-delete-dialog.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/l10n/', '.json');
@@ -104,6 +106,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     DroneDetailsComponent,
     DroneOrdersComponent,
     DroneOrdersCreateComponent,
+    DroneMeasurementsComponent,
+    DroneMeasurementsDeleteDialogComponent,
   ],
   imports: [
     BrowserModule,
