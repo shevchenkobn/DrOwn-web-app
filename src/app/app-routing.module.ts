@@ -32,6 +32,7 @@ import { DroneResolver } from './_resolvers/drone.resolver';
 import { DroneOrdersComponent } from './drone-orders/drone-orders.component';
 import { DroneOrdersResolver } from './_resolvers/drone-orders.resolver';
 import { DroneOrdersCreateComponent } from './drone-orders-create/drone-orders-create.component';
+import { DroneMeasurementsComponent } from './drone-measurements/drone-measurements.component';
 
 export const dashboardPaths = {
   users: 'users',
@@ -128,6 +129,10 @@ export const routes: Routes = [
                 resolve: {
                   owner: ProfileResolver
                 }
+              },
+              {
+                path: 'measurements',
+                component: DroneMeasurementsComponent,
               },
               {
                 path: 'orders',
