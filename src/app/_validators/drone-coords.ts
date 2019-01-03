@@ -14,17 +14,23 @@ export class DroneCoordsValidatorHelper implements OnDestroy {
     this._owner = user;
   }
 
-  longitudeValidate = (control: AbstractControl) => (!!control.value || (
-    this._owner && typeof this._owner.longitude === 'number'
-  ))
-    ? null
-    : { ownerLongitude: true }
+  longitudeValidate = (control: AbstractControl) => {
+    console.log(this._owner);
+    return (!!control.value || (
+      this._owner && this._owner.longitude !== undefined && this._owner.longitude !== null
+    ))
+      ? null
+      : { ownerLongitude: true };
+  }
 
-  latitudeValidate = (control: AbstractControl) => (!!control.value || (
-    this._owner && typeof this._owner.latitude === 'number'
-  ))
-    ? null
-    : { ownerLatitude: true }
+  latitudeValidate = (control: AbstractControl) =>  {
+    console.log(this._owner);
+    return (!!control.value || (
+      this._owner && this._owner.latitude !== undefined && this._owner.latitude !== null
+    ))
+      ? null
+      : { ownerLatitude: true };
+  }
 
   public ngOnDestroy(): void {
     this._ownerRefresh$.unsubscribe();

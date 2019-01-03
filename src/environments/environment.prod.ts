@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  host: 'http://localhost:5000',
+  host: 'https://de39f0ee.ngrok.io',
   apiRoot: '/api/v1'
 };
