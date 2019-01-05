@@ -107,7 +107,7 @@ export class DroneUpdateComponent implements OnInit, OnDestroy {
         return;
       }
       this.isMakingRequest = true;
-      this._drones.updateDrone(this.drone.droneId, { status: DroneStatus.UNAUTHORIZED })
+      this._drones.updateDrone(this.drone.droneId, { status: DroneStatus.UNAUTHORIZED }, true)
         .pipe(
           finalize(() => {
             this.isMakingRequest = false;
