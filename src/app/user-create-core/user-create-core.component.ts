@@ -9,7 +9,7 @@ import {
   UserRoles,
   userRoleToObject,
 } from '../_models/user.model';
-import { coordsValidator, longitudeValidator } from '../_validators/coordinates.validator';
+import { coordsValidator, latitudeValidator, longitudeValidator } from '../_validators/coordinates.validator';
 import { userRoleValidator } from '../_validators/user-role.validator';
 import { FormInvalidMatcher } from '../_validators/error-state-matchers';
 
@@ -115,7 +115,7 @@ export class UserCreateCoreComponent implements OnInit, OnDestroy {
       passwordConfirmation: ['', this._passwordConfirmationValidators],
 
       longitude: [null, [longitudeValidator]],
-      latitude: [null, [longitudeValidator]],
+      latitude: [null, [latitudeValidator]],
     }, {
       validators: formValidators,
     });
