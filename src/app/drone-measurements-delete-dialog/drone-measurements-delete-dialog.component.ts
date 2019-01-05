@@ -14,7 +14,7 @@ export class DroneMeasurementsDeleteDialogComponent implements OnInit {
 
   protected _dialog: MatDialog;
 
-  public startDate = new Date();
+  public startDate: Date;
   public upperLimit = new Date();
   public endDate = new Date(
     this.upperLimit.getFullYear(),
@@ -27,6 +27,9 @@ export class DroneMeasurementsDeleteDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) data: Maybe<any>,
     dialog: MatDialog,
   ) {
+    this.startDate = new Date(this.endDate);
+    this.upperLimit = new Date(this.endDate);
+    this.endDate.setDate(this.endDate.getDate() + 1);
     this.dialogRef = dialogRef;
     this.dialogRef.disableClose = true;
     this.data = data;

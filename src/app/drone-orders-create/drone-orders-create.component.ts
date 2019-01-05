@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatDialog, MatSnackBar } from '@angular/material';
+import { MatDialog, MatRadioChange, MatSnackBar } from '@angular/material';
 import { L10nService } from '../_services/l10n.service';
 import { AuthService } from '../_auth/auth.service';
 import { DroneOrdersService } from '../_services/drone-orders.service';
@@ -40,6 +40,7 @@ export class DroneOrdersCreateComponent implements OnInit, OnDestroy {
   public orderAction!: DroneOrderAction;
   public isMakingRequest!: boolean;
   public actionNames = droneOrderActionNames;
+  public actions = DroneOrderAction;
 
   private _longitudeValidators = [Validators.required, longitudeValidator];
   private _latitudeValidators = [Validators.required, latitudeValidator];
@@ -71,14 +72,15 @@ export class DroneOrdersCreateComponent implements OnInit, OnDestroy {
     this.initializeForm();
   }
 
-  public changeAction(newAction: DroneOrderAction) {
-    this.orderAction = newAction;
+  public changeAction(newAction: MatRadioChange) {
+    this.orderAction = newAction.value;
     const latitude = this.form.get('latitude') as FormControl;
     const longitude = this.form.get('longitude') as FormControl;
-    if (newAction === DroneOrderAction.MOVE_TO_LOCATION) {
+    if (this.orderAction === DroneOrderAction.MOVE_TO_LOCATION) {
       this.form.setValidators(this._formValidators);
       latitude.setValidators(this._latitudeValidators);
       longitude.setValidators(this._longitudeValidators);
+      this.form.updateValueAndValidity();
     } else {
       this.form.clearValidators();
 
@@ -144,10 +146,10 @@ export class DroneOrdersCreateComponent implements OnInit, OnDestroy {
     };
 
     const longitude = Number.parseFloat((
-      this.form.get('baseLongitude') as FormControl
+      this.form.get('longitude') as FormControl
     ).value);
     const latitude = Number.parseFloat((
-      this.form.get('baseLatitude') as FormControl
+      this.form.get('latitude') as FormControl
     ).value);
     if (!Number.isNaN(longitude)) {
       order.longitude = longitude;

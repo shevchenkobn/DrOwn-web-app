@@ -4,13 +4,15 @@
     <mat-progress-bar mode="indeterminate"
                       [style.visibility]="isMakingRequest ? 'visible' : 'hidden'"></mat-progress-bar>
     <form [formGroup]="form">
-      <mat-radio-group formControlName="action" (change)="changeAction($event)">
+      <mat-radio-group formControlName="action" (change)="changeAction($event)" class="fit-parent-width">
         <mat-radio-button *ngFor="let actionName of actionNames"
-                          [value]="orderAction[actionName]">
+                          [value]="actions[actionName]"
+                          [checked]="actions[actionName] === orderAction"
+                          class="fit-parent-width padding-05">
           {{ 'drone-order-action.' + actionName | translate }}
         </mat-radio-button>
       </mat-radio-group>
-      <div>
+      <div [hidden]="orderAction !== actions.MOVE_TO_LOCATION">
         <mat-form-field class="fit-parent-width">
           <mat-label translate>drone-order.longitude</mat-label>
           <input matInput
