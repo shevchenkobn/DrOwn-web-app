@@ -41,8 +41,14 @@ export function coordsValidator(longitudeName: string, latitudeName: string) {
     const longitude = formGroup.get(longitudeName) as FormControl;
     const latitude = formGroup.get(latitudeName) as FormControl;
     return (
-      typeof longitude.value !== typeof latitude.value
-      || !!longitude.value !== !!latitude.value
+      (
+        typeof longitude.value !== 'string'
+        && typeof longitude.value !== 'number'
+      )
+      || (
+        typeof latitude.value !== 'string'
+        && typeof latitude.value !== 'number'
+      )
     )
       ? { notCoords: true }
       : null;

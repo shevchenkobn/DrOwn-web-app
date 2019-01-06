@@ -250,7 +250,9 @@
     "ENQUEUED": "Enqueued",
     "SKIPPED": "Skipped",
     "DONE": "Done",
-    "TOO_FAR_GEO": "Too far"
+    "TOO_FAR_GEO": "Too far",
+    "HAS_LOAD": "Already loaded error",
+    "HAS_NO_LOAD": "Not loaded error"
   },
   "drone-measurements": {
     "list": {

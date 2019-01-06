@@ -14,12 +14,14 @@ export class DroneMeasurementsDeleteDialogComponent implements OnInit {
 
   protected _dialog: MatDialog;
 
-  public startDate: Date;
-  public upperLimit = new Date();
-  public endDate = new Date(
-    this.upperLimit.getFullYear(),
-    this.upperLimit.getMonth(),
-    this.upperLimit.getDate(),
+  public endDate = new Date();
+  public startDate = new Date(
+    this.endDate.getFullYear(),
+    this.endDate.getMonth(),
+    this.endDate.getDate(),
+  );
+  public upperLimit = new Date(
+    this.startDate.getTime() + 24 * 3600 * 1000
   );
 
   constructor(
@@ -27,9 +29,6 @@ export class DroneMeasurementsDeleteDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) data: Maybe<any>,
     dialog: MatDialog,
   ) {
-    this.startDate = new Date(this.endDate);
-    this.upperLimit = new Date(this.endDate);
-    this.endDate.setDate(this.endDate.getDate() + 1);
     this.dialogRef = dialogRef;
     this.dialogRef.disableClose = true;
     this.data = data;
